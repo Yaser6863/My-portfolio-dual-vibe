@@ -323,4 +323,188 @@
             <a href="https://api.whatsapp.com/send?phone=919356047251" class="b-card scroll-item">
                 <span class="tap-badge-boy">TAP [↗]</span>
                 <span class="b-num">04</span>
-                <span class="b-title"><i class="fab fa-whatsapp
+                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp</span>
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.15">INDIE</div>
+            <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
+            <div class="spotify-wrap scroll-item">
+                <iframe src="https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+        
+        <div style="height: 10vh;"></div>
+    </div>
+
+    <script>
+        var activeWorld = null;
+        var bgMusic = document.getElementById('bg-music');
+
+        function askGirlName() {
+            if(activeWorld !== null) return;
+            var modal = document.getElementById('name-modal');
+            modal.style.display = 'flex';
+            setTimeout(function() {
+                modal.style.opacity = '1';
+                document.querySelector('.modal-box').style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function submitGirlName() {
+            var nameInput = document.getElementById('girl-name-input').value.trim();
+            var girlName = nameInput !== "" ? nameInput : "Haseen";
+            var nameTag = '<span class="name-highlight">' + girlName + '</span>';
+            
+            // PLAY THE SONG (GIRL WORLD ONLY, FROM 45 SECONDS)
+            try {
+                bgMusic.volume = 0.3; // 30% Makkhan volume
+                bgMusic.currentTime = 45; // Skip intro directly to vocals
+                bgMusic.play().catch(function(e){ console.log("Auto-play prevented by browser:", e); });
+            } catch(e) {}
+
+            var isReturning = false;
+            try {
+                isReturning = localStorage.getItem('yaser_girl_visited') === 'true';
+                localStorage.setItem('yaser_girl_visited', 'true');
+            } catch (e) {}
+
+            var currentHour = new Date().getHours();
+            var greetingStr = "";
+            var closingStr = "";
+
+            if (!isReturning) { 
+                if (currentHour >= 5 && currentHour < 12) {
+                    greetingStr = `Suraj ki pehli kiran se pehle, mere khayalon mein aane ki aadat kab se ho gayi, ${nameTag}? Subah aur bhi haseen lagne lagi hai ab. ✨`;
+                    closingStr = `Itni jaldi alvida? Khair, rokunga nahi. Par ek baat bata doon, ${nameTag}... din bhar khayalon mein ab sirf mera hi zikr hoga. 🌸`;
+                } else if (currentHour >= 12 && currentHour < 17) {
+                    greetingStr = `Dopahar ki is shant khamoshi mein, tumhara yun chupke se aana... ${nameTag}, in nazaqaton ka main kya karun? Aao, theher jao kuch der. 🤎`;
+                    closingStr = `Waqt abhi dhalne mein baaki hai, ${nameTag}. Jaa rahi ho, par janti ho ki ye sirf shuruaat hai. 🌷`;
+                } else if (currentHour >= 17 && currentHour < 21) {
+                    greetingStr = `Shaam dhali aur tumhari yaad chali aayi. Par aaj toh tum khud aayi ho, ${nameTag}. Waise, is nashiile waqt mein thoda sharmaana lazmi hai. 🫣🌆`;
+                    closingStr = `Shaam ke is haseen waqt mein mujhe chhod kar jana aasan toh nahi hoga, ${nameTag}. Khair, neend ke aagosh mein bhi main intezaar karunga. 🌙`;
+                } else {
+                    greetingStr = `In raaton mein waise bhi neend kahan, par tumhara yun theherna meri bechaini aur badha raha hai, ${nameTag}. Kuch raaz ki baatein karein? 🤫🌙`;
+                    closingStr = `Jaa rahi ho? Shauk se jao. Par yaad rakhna, ${nameTag}... neend tumhari hogi, par khwabon par qabza mera hi rahega. 🖤✨`;
+                }
+            } else { 
+                greetingStr = `Wapas aana toh tay tha... ${nameTag}, lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Nazrein jhukao mat, paas aao. 🦋`;
+                closingStr = `Baar baar yahan aakar tumne faisla suna diya hai, ${nameTag}. Ab in khayalon se bach kar jaogi kahan? Main yahin hoon. 🤍`;
+            }
+
+            document.getElementById('dynamic-greeting').innerHTML = greetingStr;
+            document.getElementById('flirt-close').innerHTML = closingStr;
+
+            document.getElementById('flirt-insta').innerHTML = `Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style="color:#ff1493;">${girlName}</b>. Ek baar nazar utha kar toh dekho... 🫣✨`;
+            document.getElementById('flirt-snap').innerHTML = `Bina kisi filter ke bhi tum is qadar haseen ho, <b style="color:#ff1493;">${girlName}</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖`;
+            document.getElementById('flirt-wp').innerHTML = `Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style="color:#ff1493;">${girlName}</b>. 🥱🌙`;
+            document.getElementById('flirt-secret').innerHTML = `Tumhari in gahri aankhon mein jo ankahe raaz chhupe hain na, <b style="color:#ff1493;">${girlName}</b>... mera dil karta hai bas unme doob jaun. Shhh... 🤫🤎`;
+
+            var modal = document.getElementById('name-modal');
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+                startWorld('world-girl');
+            }, 500);
+        }
+
+        window.startWorld = function(worldId) {
+            if(activeWorld !== null) return; 
+            activeWorld = worldId; 
+
+            var gate = document.getElementById('gate');
+            var world = document.getElementById(worldId);
+            
+            gate.style.transform = 'scale(1.2)';
+            gate.style.opacity = '0';
+            
+            setTimeout(function() {
+                gate.style.display = 'none';
+                world.style.display = 'block';
+                
+                setTimeout(function() {
+                    world.style.opacity = '1';
+                    initScrollObserver();
+                }, 50);
+            }, 800);
+        };
+
+        function setupParallax(worldId) {
+            var world = document.getElementById(worldId);
+            if(!world) return;
+            var layers = world.querySelectorAll('.para-layer');
+            
+            world.addEventListener('scroll', function() {
+                requestAnimationFrame(function() {
+                    var scrolled = world.scrollTop;
+                    layers.forEach(function(layer) {
+                        var speed = layer.getAttribute('data-speed');
+                        var isCenterX = layer.classList.contains('center-x');
+                        var isCenterY = layer.classList.contains('center-y');
+                        var xBase = isCenterX ? '-50%' : '0px';
+                        var yBase = isCenterY ? '-50%' : '0px';
+                        layer.style.transform = 'translate(' + xBase + ', calc(' + yBase + ' + ' + (scrolled * speed) + 'px))';
+                    });
+                });
+            });
+        }
+
+        function initScrollObserver() {
+            var cards = document.querySelectorAll('.scroll-item');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            cards.forEach(function(card) { observer.observe(card) });
+        }
+
+        // GLOBAL TOUCH RIPPLE & EMOJIS (GIRL WORLD ONLY)
+        var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
+        var lastSparkleTime = 0;
+
+        function spawnSparkle(e) {
+            if(activeWorld !== 'world-girl') return; 
+            
+            var now = Date.now();
+            if(now - lastSparkleTime < 80) return; 
+            lastSparkleTime = now;
+
+            var x = e.touches ? e.touches[0].clientX : e.clientX;
+            var y = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            var girlWorld = document.getElementById('world-girl');
+            var scrollY = girlWorld.scrollTop;
+
+            // Water Ripple
+            var ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = (y + scrollY) + 'px';
+            girlWorld.appendChild(ripple);
+
+            // Floating Emoji
+            var sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            sparkle.style.left = (x - 12) + 'px';
+            sparkle.style.top = (y + scrollY - 12) + 'px';
+            girlWorld.appendChild(sparkle);
+
+            setTimeout(function() { sparkle.remove(); ripple.remove(); }, 1000);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('touchmove', spawnSparkle, {passive: true});
+            window.addEventListener('click', spawnSparkle);
+
+            setupParallax('world-girl');
+            setupParallax('world-boy');
+        });
+    </script>
+</body>
+</html>
