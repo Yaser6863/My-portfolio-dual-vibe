@@ -324,4 +324,345 @@
         </div>
 
         <div class="section boy-fall">
-            <div class="para-bold para-layer center-x center-y" data-speed
+            <div class="para-bold para-layer center-x center-y" data-speed="0.25">SHADOWS</div>
+            <div class="para-quote para-layer center-x" data-speed="0.45">"We operate in the dark."</div>
+            <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="b-card scroll-item tilt-card">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">02</span>
+                <span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span>
+            </a>
+        </div>
+
+        <div class="section boy-fall">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.1">WEB-SLINGER</div>
+            <div class="para-quote para-layer center-x" data-speed="0.3">"My spider-sense is tingling."</div>
+            <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="b-card scroll-item tilt-card">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">03</span>
+                <span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>
+            </a>
+        </div>
+
+        <div class="section boy-fall">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.2">VENOM</div>
+            <div class="para-quote para-layer center-x" data-speed="0.4">"Embrace the darkness."</div>
+            <a href="https://api.whatsapp.com/send?phone=919356047251" class="b-card scroll-item tilt-card">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">04</span>
+                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>
+            </a>
+        </div>
+
+        <div class="section boy-fall">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div>
+            <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
+            <div class="spotify-wrap scroll-item" style="border: 2px solid #550000; box-shadow: 0 10px 40px rgba(255,0,0,0.3);">
+                <iframe src="https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <div class="section boy-fall">
+            <div class="para-bold para-layer center-x center-y glitch-text" data-speed="0.2">WARNING</div>
+            <div class="para-quote para-layer center-x" data-speed="0.4">"System Override Available."</div>
+            <button class="btn-blackout scroll-item" onclick="triggerBlackout()">INITIATE SILENCE</button>
+        </div>
+        
+        <div style="height: 10vh;"></div>
+    </div>
+    
+    <div id="offline-text">OFFLINE.</div>
+
+    <script>
+        var activeWorld = null;
+
+        function askGirlName() {
+            if(activeWorld !== null) return;
+            var modal = document.getElementById('name-modal');
+            modal.style.display = 'flex';
+            setTimeout(function() {
+                modal.style.opacity = '1';
+                document.querySelector('.modal-box').style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        function submitGirlName() {
+            var nameInput = document.getElementById('girl-name-input').value.trim();
+            var girlName = nameInput !== "" ? nameInput : "Haseen";
+            var nameTag = '<span class="name-highlight">' + girlName + '</span>';
+            
+            // SAFE LOCAL STORAGE CHECK (Fixes File Protocol Crashes)
+            var isReturning = false;
+            try {
+                isReturning = localStorage.getItem('yaser_girl_visited') === 'true';
+                localStorage.setItem('yaser_girl_visited', 'true');
+            } catch (e) {
+                console.log("Storage blocked, continuing normally");
+            }
+
+            var currentHour = new Date().getHours();
+            var greetingStr = "";
+            var closingStr = "";
+
+            // 1. Time-based & Visit-based Greeting (Deep & Poetic)
+            if (!isReturning) { // FIRST TIME
+                if (currentHour >= 5 && currentHour < 12) {
+                    greetingStr = `Suraj ki pehli kiran se pehle, mere khayalon mein aane ki aadat kab se ho gayi, ${nameTag}? Subah aur bhi haseen lagne lagi hai ab. ✨`;
+                    closingStr = `Itni jaldi alvida? Khair, rokunga nahi. Par ek baat bata doon, ${nameTag}... din bhar khayalon mein ab sirf mera hi zikr hoga.<br><span style="font-size: 0.7em; opacity: 0.8; margin-top: 15px; display: block; font-weight: normal;">Have a beautiful day. 🌸</span>`;
+                } else if (currentHour >= 12 && currentHour < 17) {
+                    greetingStr = `Dopahar ki is shant khamoshi mein, tumhara yun chupke se aana... ${nameTag}, in nazaqaton ka main kya karun? Aao, theher jao kuch der. 🤎`;
+                    closingStr = `Waqt abhi dhalne mein baaki hai, ${nameTag}. Jaa rahi ho, par janti ho ki ye sirf shuruaat hai. Shaam hone do, dil wapas yahin aayega.<br><span style="font-size: 0.7em; opacity: 0.8; margin-top: 15px; display: block; font-weight: normal;">Take care. ✨</span>`;
+                } else if (currentHour >= 17 && currentHour < 21) {
+                    greetingStr = `Shaam dhali aur tumhari yaad chali aayi. Par aaj toh tum khud aayi ho, ${nameTag}. Waise, is nashiile waqt mein thoda sharmaana lazmi hai. 🌆`;
+                    closingStr = `Shaam ke is haseen waqt mein mujhe chhod kar jana aasan toh nahi hoga, ${nameTag}. Khair, neend ke aagosh mein bhi main intezaar karunga.<br><span style="font-size: 0.7em; opacity: 0.8; margin-top: 15px; display: block; font-weight: normal;">Haseen khwab dekho. 🌙</span>`;
+                } else {
+                    greetingStr = `In raaton mein waise bhi neend kahan, par tumhara yun theherna meri bechaini aur badha raha hai, ${nameTag}. Kuch raaz ki baatein karein? 🌙`;
+                    closingStr = `Jaa rahi ho? Shauk se jao. Par yaad rakhna, ${nameTag}... neend tumhari hogi, par khwabon par qabza mera hi rahega. 🖤<br><span style="font-size: 0.7em; opacity: 0.8; margin-top: 15px; display: block; font-weight: normal;">Meethe khwab, sirf mere. 🌙✨</span>`;
+                }
+            } else { // SECOND TIME (HEAVY & CONFIDENT)
+                if (currentHour >= 5 && currentHour < 12) {
+                    greetingStr = `Wapas aana toh tay tha, par itni jaldi? ${nameTag}, lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Achi aadat hai. 🔥☕`;
+                } else if (currentHour >= 12 && currentHour < 17) {
+                    greetingStr = `Phir se wahi kashish? ${nameTag}, tum in baaton se jitna bhagogi, ye utna hi tumhare aur qareeb aayengi. Nazrein jhukao mat, paas aao. 🖤`;
+                } else if (currentHour >= 17 && currentHour < 21) {
+                    greetingStr = `Is shaam ka nasha tumhari is wapsi se aur gehra ho gaya hai. Ab bacha hi kya hai chhupane ko, ${nameTag}? Ek dusre ko padh lete hain. 🍷`;
+                } else {
+                    greetingStr = `Mujhe pata tha, is raat ki gehrai tumhe yahin kheench layegi. Ab in saanson ki aanch mehsoos karo, ${nameTag}... kyunki ab wapas jana namumkin hai. 🌙✨`;
+                }
+                
+                closingStr = `Baar baar yahan aakar tumne faisla suna diya hai, ${nameTag}. Ab in khayalon se bach kar jaogi kahan? <br><span style="font-size: 0.7em; opacity: 0.8; margin-top: 15px; display: block; font-weight: normal;">Main yahin hoon. Hamesha tumhare zehen mein. 🖤</span>`;
+            }
+
+            document.getElementById('dynamic-greeting').innerHTML = greetingStr;
+            document.getElementById('flirt-close').innerHTML = closingStr;
+
+            // 2. Deep Poetic Card Flirts with Name
+            document.getElementById('flirt-insta').innerHTML = `Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style="color:#d81b60;">${girlName}</b>. Ek baar nazar utha kar toh dekho... is shiddat se ishq ho jayega. 🖤`;
+            
+            document.getElementById('flirt-snap').innerHTML = `Bina kisi filter ke bhi tum is qadar haseen ho, <b style="color:#d81b60;">${girlName}</b>, ki baaqi sab berang lagta hai. Tumhari us choti si muskurahat ki latt si lagti jaa rahi hai mujhe. ✨`;
+            
+            document.getElementById('flirt-wp').innerHTML = `Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style="color:#d81b60;">${girlName}</b>. Kabhi fursat mein aazma lena. 🌙`;
+            
+            document.getElementById('flirt-secret').innerHTML = `Tumhari in gahri, kaali aankhon mein jo ankahe raaz chhupe hain na, <b style="color:#d81b60;">${girlName}</b>... mera dil karta hai bas unme doob jaun. Yahan sirf main hoon, tum ho, aur ye madhoshi. 🤎`;
+
+            // Transition logic
+            var modal = document.getElementById('name-modal');
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+                startWorld('world-girl');
+            }, 500);
+        }
+
+        function triggerBlackout() {
+            document.body.style.background = '#000';
+            document.getElementById('spidey-canvas').style.display = 'none';
+            
+            var fallingSections = document.querySelectorAll('.boy-fall');
+            
+            fallingSections.forEach(function(sec, index) {
+                var delay = Math.random() * 0.5;
+                sec.style.transition = 'all 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) ' + delay + 's';
+                sec.style.transform = 'translateY(150vh) rotate(20deg)';
+                sec.style.opacity = '0';
+            });
+
+            setTimeout(function() {
+                document.getElementById('world-boy').style.display = 'none';
+                document.getElementById('offline-text').style.display = 'block';
+            }, 1500);
+        }
+
+        window.startWorld = function(worldId) {
+            if(activeWorld !== null) return; 
+            activeWorld = worldId; 
+
+            var gate = document.getElementById('gate');
+            var world = document.getElementById(worldId);
+            
+            gate.style.transform = 'scale(1.2)';
+            gate.style.opacity = '0';
+            
+            setTimeout(function() {
+                gate.style.display = 'none';
+                world.style.display = 'block';
+                
+                setTimeout(function() {
+                    world.style.opacity = '1';
+                    initScrollObserver();
+                    initInteractiveTilt(); 
+                    if(worldId === 'world-boy') initBoyFeatures();
+                }, 50);
+            }, 800);
+        };
+
+        function setupParallax(worldId) {
+            var world = document.getElementById(worldId);
+            if(!world) return;
+            var layers = world.querySelectorAll('.para-layer');
+            
+            world.addEventListener('scroll', function() {
+                requestAnimationFrame(function() {
+                    var scrolled = world.scrollTop;
+                    layers.forEach(function(layer) {
+                        var speed = layer.getAttribute('data-speed');
+                        var isCenterX = layer.classList.contains('center-x');
+                        var isCenterY = layer.classList.contains('center-y');
+                        
+                        var xBase = isCenterX ? '-50%' : '0px';
+                        var yBase = isCenterY ? '-50%' : '0px';
+                        
+                        layer.style.transform = 'translate(' + xBase + ', calc(' + yBase + ' + ' + (scrolled * speed) + 'px))';
+                    });
+                });
+            });
+        }
+
+        function initScrollObserver() {
+            var cards = document.querySelectorAll('.scroll-item');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible'); 
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            cards.forEach(function(card) { observer.observe(card) });
+        }
+
+        function initInteractiveTilt() {
+            var cards = document.querySelectorAll('.tilt-card');
+            
+            cards.forEach(function(card) {
+                card.addEventListener('mousemove', function(e) {
+                    var rect = card.getBoundingClientRect();
+                    var x = e.clientX - rect.left; 
+                    var y = e.clientY - rect.top;  
+                    
+                    var centerX = rect.width / 2;
+                    var centerY = rect.height / 2;
+                    
+                    var rotateX = ((y - centerY) / centerY) * -15; 
+                    var rotateY = ((x - centerX) / centerX) * 15;
+                    
+                    card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.05)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+                
+                card.addEventListener('touchmove', function(e) {
+                    var rect = card.getBoundingClientRect();
+                    var touch = e.touches[0];
+                    if(!touch) return;
+                    var x = touch.clientX - rect.left;
+                    var y = touch.clientY - rect.top;
+                    
+                    var centerX = rect.width / 2;
+                    var centerY = rect.height / 2;
+                    
+                    var rotateX = ((y - centerY) / centerY) * -15;
+                    var rotateY = ((x - centerX) / centerX) * 15;
+                    
+                    card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.05)';
+                }, {passive: true});
+                
+                card.addEventListener('touchend', function() {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+            });
+        }
+
+        // GLOBAL TOUCH SPARKLES (WORKS EVERYWHERE IN GIRL WORLD)
+        var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
+        var lastSparkleTime = 0;
+
+        function spawnSparkle(e) {
+            if(activeWorld !== 'world-girl') return; 
+            
+            var now = Date.now();
+            if(now - lastSparkleTime < 60) return; 
+            lastSparkleTime = now;
+
+            var x = e.touches ? e.touches[0].clientX : e.clientX;
+            var y = e.touches ? e.touches[0].clientY : e.clientY;
+
+            var sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            var girlWorld = document.getElementById('world-girl');
+            var scrollY = girlWorld.scrollTop;
+            sparkle.style.left = (x - 12) + 'px';
+            sparkle.style.top = (y + scrollY - 12) + 'px';
+            
+            girlWorld.appendChild(sparkle);
+
+            setTimeout(function() { sparkle.remove() }, 1000);
+        }
+
+        // INIT DOM STUFF SAFELY
+        window.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('touchmove', spawnSparkle, {passive: true});
+            window.addEventListener('mousemove', spawnSparkle);
+
+            setupParallax('world-girl');
+            setupParallax('world-boy');
+        });
+
+        function initBoyFeatures() {
+            var boyWorld = document.getElementById('world-boy');
+            var canvas = document.getElementById('spidey-canvas');
+            var ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            var particles = [];
+            var mouse = { x: null, y: null };
+
+            boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+            boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
+
+            for(var i=0; i<60; i++) {
+                particles.push({ 
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height, 
+                    vx: (Math.random() - 0.5)*1.5, 
+                    vy: (Math.random() - 0.5)*1.5 
+                });
+            }
+
+            function animateWeb() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(function(p) {
+                    p.x += p.vx; p.y += p.vy;
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fillStyle = '#ff0000'; ctx.fill();
+
+                    if(mouse.x !== null) {
+                        var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
+                        if(dist < 150) {
+                            ctx.beginPath(); 
+                            ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - dist/150) + ')'; 
+                            ctx.lineWidth = 1.5;
+                            ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(animateWeb);
+            }
+            animateWeb();
+        }
+    </script>
+</body>
+</html>
