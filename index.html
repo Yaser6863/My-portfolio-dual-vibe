@@ -93,7 +93,7 @@
         @keyframes pulseTap { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 10px 10px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
 
         /* =========================================
-           GIRL WORLD (Glassmorphism & Fixed GIFs)
+           GIRL WORLD (Glassmorphism, NO GIFS)
         ========================================= */
         #world-girl { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #fff; cursor: crosshair; }
         #world-girl .scroll-down-icon { color: #ff1493; text-shadow: 0 2px 5px rgba(255,20,147,0.5); }
@@ -103,20 +103,17 @@
         .name-highlight { color: #ff1493; text-shadow: 0 0 8px rgba(255,20,147,0.5); font-style: italic; font-weight: 900; letter-spacing: 1px; }
 
         .g-card {
-            background: rgba(255, 255, 255, 0.25); border-radius: 25px; padding: 25px; width: 100%; max-width: 450px; z-index: 10;
+            background: rgba(255, 255, 255, 0.25); border-radius: 25px; padding: 35px 25px; width: 100%; max-width: 450px; z-index: 10;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.6); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             color: #333; opacity: 0; transform: scale(0.9) translateY(50px); transition: opacity 0.8s, transform 0.8s;
-            display: flex; flex-direction: row; align-items: center; gap: 15px; text-decoration: none; position: relative;
+            display: flex; flex-direction: column; text-align: center; gap: 15px; text-decoration: none; position: relative;
         }
         .g-card.visible { opacity: 1; transform: scale(1) translateY(0); }
         
-        .g-content { flex: 1; display: flex; flex-direction: column; }
-        .g-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; color: #ff1493; }
-        .g-flirt { font-size: 1.05rem; font-weight: 700; line-height: 1.5; color: #444; }
-        
-        /* ORIGINAL WORKING GIFS - Fixed width/height */
-        .mochi-gif { width: 90px; height: 90px; border-radius: 15px; object-fit: cover; pointer-events: none; background: rgba(255,255,255,0.5); flex-shrink: 0; display: block; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .g-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; color: #ff1493; }
+        .g-title i { font-size: 1.8rem; display: block; margin-bottom: 10px; color: #ff69b4; }
+        .g-flirt { font-size: 1.1rem; font-weight: 700; line-height: 1.6; color: #444; }
 
         .main-flirt {
             background: rgba(255, 255, 255, 0.3); padding: 30px; border-radius: 20px; text-align: center;
@@ -135,7 +132,7 @@
         @keyframes rippleAnim { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } }
 
         /* =========================================
-           BOY WORLD (Heavy Spiderman Web + Bio)
+           BOY WORLD (Heavy Spiderman Web)
         ========================================= */
         #world-boy { background: #050505; font-family: 'Montserrat', sans-serif; position: relative; }
         
@@ -152,8 +149,6 @@
         #world-boy .para-quote { color: #eee; text-transform: uppercase; letter-spacing: 3px; font-style: normal; }
 
         .yaser-name { font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; color: #ff0000; letter-spacing: 10px; text-shadow: 4px 4px 0px #330000; z-index: 10; margin-bottom: 5px; }
-        
-        /* THE PERFECT BIO */
         .yaser-bio { font-size: clamp(0.7rem, 2.5vw, 1.2rem); font-weight: 700; color: #fff; letter-spacing: 2px; text-transform: uppercase; z-index: 10; border-top: 1px solid #550000; border-bottom: 1px solid #550000; padding: 10px 0; text-align: center; }
 
         .b-card {
@@ -222,64 +217,51 @@
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.15">NASHA</div>
             <a href="https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==" class="g-card scroll-item">
-                <div class="g-content">
-                    <span class="tap-badge">TAP 👆</span>
-                    <div class="g-title"><i class="fab fa-instagram"></i> Instagram</div>
-                    <div class="g-flirt" id="flirt-insta"></div>
-                </div>
-                <img src="https://media1.tenor.com/m/aKFaZBrZHY0AAAAC/peach-goma.gif" class="mochi-gif" alt="blush">
+                <span class="tap-badge">TAP 👆</span>
+                <div class="g-title"><i class="fab fa-instagram"></i> Instagram</div>
+                <div class="g-flirt" id="flirt-insta"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.25">AADAT</div>
             <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="g-card scroll-item">
-                <div class="g-content">
-                    <span class="tap-badge">TAP 👆</span>
-                    <div class="g-title"><i class="fab fa-snapchat-ghost"></i> Snapchat</div>
-                    <div class="g-flirt" id="flirt-snap"></div>
-                </div>
-                <img src="https://media1.tenor.com/m/81Peb8z-82YAAAAC/peach-and-goma-peach-goma.gif" class="mochi-gif" alt="hearts">
+                <span class="tap-badge">TAP 👆</span>
+                <div class="g-title"><i class="fab fa-snapchat-ghost"></i> Snapchat</div>
+                <div class="g-flirt" id="flirt-snap"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.1">RAATEN</div>
             <a href="https://api.whatsapp.com/send?phone=919356047251" class="g-card scroll-item">
-                <div class="g-content">
-                    <span class="tap-badge">TAP 👆</span>
-                    <div class="g-title"><i class="fab fa-whatsapp"></i> WhatsApp</div>
-                    <div class="g-flirt" id="flirt-wp"></div>
-                </div>
-                <img src="https://media1.tenor.com/m/O6L6K6O1XbwAAAAC/peach-goma.gif" class="mochi-gif" alt="sleepy">
+                <span class="tap-badge">TAP 👆</span>
+                <div class="g-title"><i class="fab fa-whatsapp"></i> WhatsApp</div>
+                <div class="g-flirt" id="flirt-wp"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.2">RAAZ</div>
             <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="g-card scroll-item">
-                <div class="g-content">
-                    <span class="tap-badge">TAP 👆</span>
-                    <div class="g-title"><i class="fab fa-instagram"></i> Secret Vibe</div>
-                    <div class="g-flirt" id="flirt-secret"></div>
-                </div>
-                <img src="https://media1.tenor.com/m/FwF4mK0Fh9oAAAAC/peach-and.gif" class="mochi-gif" alt="peek">
+                <span class="tap-badge">TAP 👆</span>
+                <div class="g-title"><i class="fab fa-instagram"></i> Secret Vibe</div>
+                <div class="g-flirt" id="flirt-secret"></div>
             </a>
         </div>
 
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.15">MELODY</div>
             <div class="spotify-wrap spotify-girl scroll-item">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXc846t546m0N?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="Https://open.spotify.com/playlist/1HJZWn6Z8UGrK2SxECf9bb" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
 
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.2">ALVIDA</div>
-            <div class="g-card scroll-item" style="max-width: 400px; flex-direction: column; text-align: center;">
-                <img src="https://media1.tenor.com/m/tHqgU7i8J8IAAAAC/peach-and-goma-peach-goma.gif" style="width:120px; height:120px; border-radius:15px; margin: 0 auto 15px auto;" alt="bye">
+            <div class="g-card scroll-item" style="max-width: 400px; text-align: center;">
                 <div class="g-flirt" id="flirt-close" style="font-size: 1.2rem; font-weight: 900;"></div>
-                <div style="margin-top: 15px; font-size: 0.9rem; color: #ff1493; letter-spacing: 2px;">THE END 🌸</div>
+                <div style="margin-top: 20px; font-size: 1rem; color: #ff1493; letter-spacing: 3px; font-weight: 900;">THE END 🌸</div>
             </div>
         </div>
         <div style="height: 5vh;"></div>
@@ -337,7 +319,7 @@
             <div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div>
             <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
             <div class="spotify-wrap spotify-boy scroll-item">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4wta20PHgwo?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="Https://open.spotify.com/playlist/1HJZWn6Z8UGrK2SxECf9bb" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
 
@@ -396,7 +378,7 @@
             var girlName = rawName !== "" ? rawName : "Haseen";
             var nameTag = '<span class="name-highlight">' + girlName + '</span>';
 
-            // AUTOPLAY DIRECTLY TIED TO "ENTER" CLICK (Bypasses Browser Blocks)
+            // AUTOPLAY ON ENTER CLICK (Plays sanam.mp3 from 45s, volume 30%)
             var bgMusic = document.getElementById('bg-music');
             if (bgMusic) {
                 bgMusic.currentTime = 45;
@@ -448,7 +430,7 @@
             if(elInsta) elInsta.innerHTML = "Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style='color:#ff1493;'>" + girlName + "</b>. Ek baar nazar utha kar toh dekho... 🫣✨";
 
             var elSnap = document.getElementById('flirt-snap');
-            if(elSnap) elSnap.innerHTML = "Bina kisi filter ke bhi tum is qadar haseen ho, <b style='color:#ff1493;'>" + girlName + "</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖";
+            if(elSnap) elSnap.innerHTML = "Bina kisi filter ke bhi tum id qadar haseen ho, <b style='color:#ff1493;'>" + girlName + "</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖";
 
             var elWp = document.getElementById('flirt-wp');
             if(elWp) elWp.innerHTML = "Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style='color:#ff1493;'>" + girlName + "</b>. 🥱🌙";
@@ -548,7 +530,6 @@
             boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
             boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
 
-            // 150 Particles for heavy density
             for(var i=0; i<150; i++) {
                 particles.push({ 
                     x: Math.random() * canvas.width, 
@@ -572,7 +553,6 @@
                     ctx.fillStyle = '#ff0000'; 
                     ctx.fill();
 
-                    // Connection distance 180 for strong web
                     var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
                     if(dist < 180) {
                         ctx.beginPath(); 
@@ -596,4 +576,4 @@
         };
     </script>
 </body>
-</html> 
+</html>
