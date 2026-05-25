@@ -309,4 +309,355 @@
                 <div class="g-flirt" style="color: #fff; text-shadow: 0 0 10px #ff1493; font-size: 1.2rem;">Safar yahan khatam hota hai...</div>
                 <button class="bye-girl-btn" onclick="triggerGirlBye()">Say Goodbye 🌹</button>
             </div>
+        </div>
+        <div style="height: 5vh;"></div>
+    </div>
+
+    <div id="world-boy" class="world">
+        <canvas id="spidey-canvas"></canvas>
+        
+        <div class="section boy-content" style="flex-direction: column;">
+            <div class="yaser-name">YASER</div>
+            <div class="yaser-bio">Science 🧬  |  Code 💻  |  Web 🌐  |  Tech ⚙️</div>
+            <div class="scroll-down-icon" style="bottom: 10vh;">Scroll</div>
+        </div>
+        
+        <div class="section boy-content">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SPIDERMAN</div>
+            <div class="para-quote para-layer center-x" data-speed="0.35">"With great power comes great responsibility."</div>
+            <a href="https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==" class="b-card scroll-item">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">01</span>
+                <span class="b-title"><i class="fab fa-instagram"></i> Main Profile</span>
+            </a>
+        </div>
+        
+        <div class="section boy-content">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.25">SHADOWS</div>
+            <div class="para-quote para-layer center-x" data-speed="0.45">"We operate in the dark."</div>
+            <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="b-card scroll-item">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">02</span>
+                <span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span>
+            </a>
+        </div>
+        
+        <div class="section boy-content">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.1">WEB-SLINGER</div>
+            <div class="para-quote para-layer center-x" data-speed="0.3">"My spider-sense is tingling."</div>
+            <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="b-card scroll-item">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">03</span>
+                <span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>
+            </a>
+        </div>
+        
+        <div class="section boy-content">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.2">VENOM</div>
+            <div class="para-quote para-layer center-x" data-speed="0.4">"Embrace the darkness."</div>
+            <a href="https://api.whatsapp.com/send?phone=919356047251" class="b-card scroll-item">
+                <span class="tap-badge-boy">TAP [↗]</span>
+                <span class="b-num">04</span>
+                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>
+            </a>
+        </div>
+        
+        <div class="section boy-content">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div>
+            <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
+            <div class="spotify-wrap spotify-boy scroll-item">
+                <iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <div class="section end-screen" style="flex-direction: column; text-align: center; justify-content: center;">
+            <div class="para-bold para-layer center-x center-y" data-speed="0.2">SYSTEM</div>
+            <button class="terminate-btn boy-content" id="terminate-btn" onclick="triggerMeltdown()">TERMINATE CONNECTION</button>
+            <div id="offline-msg">SYSTEM OFFLINE</div>
+        </div>
+        <div style="height: 5vh;"></div>
+    </div>
+
+    <script>
+        var isWorldActive = false;
+        var currentWorld = "";
+
+        function openGirlModal() {
+            if (isWorldActive) return;
+            var modal = document.getElementById('name-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                setTimeout(function() {
+                    modal.style.opacity = '1';
+                    var box = document.querySelector('.modal-box');
+                    if(box) box.style.transform = 'translateY(0)';
+                }, 10);
+            }
+        }
+
+        function triggerWorld(wId) {
+            if (isWorldActive) return;
+            isWorldActive = true;
+            currentWorld = wId;
+            var gate = document.getElementById('gate');
+            var world = document.getElementById(wId);
+            
+            if (gate) {
+                gate.style.transform = 'scale(1.2)';
+                gate.style.opacity = '0';
+                setTimeout(function() {
+                    gate.style.display = 'none';
+                    if (world) world.style.display = 'block';
+                    setTimeout(function() {
+                        if (world) world.style.opacity = '1';
+                        initScrollObserver();
+                        if (wId === 'world-boy') initBoyFeatures();
+                    }, 50);
+                }, 800);
+            }
+        }
+
+        function processGirlName() {
+            var inputElem = document.getElementById('girl-name-input');
+            var rawName = (inputElem && inputElem.value) ? inputElem.value.trim() : "";
+            var girlName = rawName !== "" ? rawName : "Haseen";
+            var nameTag = '<span class="name-highlight">' + girlName + '</span>';
+
+            // AUTOPLAY ON ENTER CLICK (Plays sanam.mp3 from 45s, volume 30%)
+            var bgMusic = document.getElementById('bg-music');
+            if (bgMusic) {
+                bgMusic.currentTime = 45;
+                bgMusic.volume = 0.3;
+                var playProm = bgMusic.play();
+                if (playProm !== undefined) {
+                    playProm.catch(function(e) { console.log("Audio block prevented play", e); });
+                }
+            }
+
+            var isReturning = false;
+            try {
+                if (window.localStorage) {
+                    isReturning = localStorage.getItem('yaser_girl_visited') === 'true';
+                    localStorage.setItem('yaser_girl_visited', 'true');
+                }
+            } catch (e) {}
+
+            var currentHour = new Date().getHours();
+            var greetingStr = "";
+
+            if (!isReturning) { 
+                if (currentHour >= 5 && currentHour < 12) {
+                    greetingStr = "Suraj ki pehli kiran se pehle, mere khayalon mein aane ki aadat kab se ho gayi, " + nameTag + "? Subah aur bhi haseen lagne lagi hai ab. ✨";
+                } else if (currentHour >= 12 && currentHour < 17) {
+                    greetingStr = "Dopahar ki is shant khamoshi mein, tumhara yun chupke se aana... " + nameTag + ", in nazaqaton ka main kya karun? Aao, theher jao kuch der. 🤎";
+                } else if (currentHour >= 17 && currentHour < 21) {
+                    greetingStr = "Shaam dhali aur tumhari yaad chali aayi. Par aaj toh tum khud aayi ho, " + nameTag + ". Waise, is nashiile waqt mein thoda sharmaana lazmi hai. 🫣🌆";
+                } else {
+                    greetingStr = "In raaton mein waise bhi neend kahan, par tumhara yun theherna meri bechaini aur badha raha hai, " + nameTag + ". Kuch raaz ki baatein karein? 🤫🌙";
+                }
+            } else { 
+                greetingStr = "Wapas aana toh tay tha... " + nameTag + ", lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Nazrein jhukao mat, paas aao. 🦋";
+            }
+
+            var elGreeting = document.getElementById('dynamic-greeting');
+            if(elGreeting) elGreeting.innerHTML = greetingStr;
+
+            var elInsta = document.getElementById('flirt-insta');
+            if(elInsta) elInsta.innerHTML = "Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style='color:#ff1493;'>" + girlName + "</b>. Ek baar nazar utha kar toh dekho... 🫣✨";
+
+            var elSnap = document.getElementById('flirt-snap');
+            if(elSnap) elSnap.innerHTML = "Bina kisi filter ke bhi tum is qadar haseen ho, <b style='color:#ff1493;'>" + girlName + "</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖";
+
+            var elWp = document.getElementById('flirt-wp');
+            if(elWp) elWp.innerHTML = "Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style='color:#ff1493;'>" + girlName + "</b>. 🥱🌙";
+
+            var elSec = document.getElementById('flirt-secret');
+            if(elSec) elSec.innerHTML = "Tumhari in gahri aankhon mein jo ankahe raaz chhupe hain na, <b style='color:#ff1493;'>" + girlName + "</b>... mera dil karta hai bas unme doob jaun. Shhh... 🤫🤎";
+
+            var modal = document.getElementById('name-modal');
+            if (modal) {
+                modal.style.opacity = '0';
+                setTimeout(function() {
+                    modal.style.display = 'none';
+                    triggerWorld('world-girl');
+                }, 500);
+            }
+        }
+
+        // RED ROSE GOODBYE LOGIC (GIRLS)
+        function triggerGirlBye() {
+            var bgMusic = document.getElementById('bg-music');
+            if(bgMusic) {
+                var fadeAudio = setInterval(function () {
+                    if (bgMusic.volume > 0.05) { bgMusic.volume -= 0.05; }
+                    else { bgMusic.pause(); clearInterval(fadeAudio); }
+                }, 200);
+            }
+
+            var overlay = document.getElementById('girl-bye-overlay');
+            if(overlay) {
+                overlay.style.display = 'flex';
+                setTimeout(function() {
+                    overlay.style.opacity = '1';
+                }, 50);
+            }
+        }
+
+        // SYSTEM MELTDOWN LOGIC (BOYS)
+        function triggerMeltdown() {
+            var btn = document.getElementById('terminate-btn');
+            if(btn) btn.style.display = 'none';
+
+            var sections = document.querySelectorAll('#world-boy .boy-content');
+            for(var i = 0; i < sections.length; i++) {
+                sections[i].style.transition = 'all 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
+                var randomAngle = (Math.random() * 60) - 30; 
+                sections[i].style.transform = 'translateY(150vh) rotate(' + randomAngle + 'deg)';
+                sections[i].style.opacity = '0';
+            }
+
+            setTimeout(function() {
+                var canvas = document.getElementById('spidey-canvas');
+                if(canvas) canvas.style.opacity = '0';
+                
+                var msg = document.getElementById('offline-msg');
+                if(msg) msg.style.display = 'block';
+                
+                var boyWorld = document.getElementById('world-boy');
+                if(boyWorld) boyWorld.scrollTo({ top: boyWorld.scrollHeight, behavior: 'smooth' });
+            }, 1000);
+        }
+
+        // PARALLAX EFFECT
+        function setupParallax(worldId) {
+            var world = document.getElementById(worldId);
+            if (!world) return;
+            var layers = world.querySelectorAll('.para-layer');
+            world.addEventListener('scroll', function() {
+                requestAnimationFrame(function() {
+                    var scrolled = world.scrollTop;
+                    for (var i = 0; i < layers.length; i++) {
+                        var layer = layers[i];
+                        var speed = layer.getAttribute('data-speed');
+                        var isCenterX = layer.classList.contains('center-x');
+                        var isCenterY = layer.classList.contains('center-y');
+                        var xBase = isCenterX ? '-50%' : '0px';
+                        var yBase = isCenterY ? '-50%' : '0px';
+                        layer.style.transform = 'translate(' + xBase + ', calc(' + yBase + ' + ' + (scrolled * speed) + 'px))';
+                    }
+                });
+            });
+        }
+
+        // SCROLL REVEAL CARDS
+        function initScrollObserver() {
+            if (!window.IntersectionObserver) return;
+            var cards = document.querySelectorAll('.scroll-item');
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].isIntersecting) entries[i].target.classList.add('visible');
+                }
+            }, { threshold: 0.1 }); 
+            for (var j = 0; j < cards.length; j++) observer.observe(cards[j]);
+        }
+
+        // MAGIC RIPPLES & EMOJIS (GIRLS ONLY)
+        var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
+        function spawnSparkle(e) {
+            if (currentWorld !== 'world-girl') return;
+            
+            var overlay = document.getElementById('girl-bye-overlay');
+            if (overlay && overlay.style.opacity === '1') return;
+            
+            var x = e.touches ? e.touches[0].clientX : e.clientX;
+            var y = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            var girlWorld = document.getElementById('world-girl');
+            if (!girlWorld) return;
+            var scrollY = girlWorld.scrollTop;
+
+            var ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = (y + scrollY) + 'px';
+            girlWorld.appendChild(ripple);
+
+            var sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            sparkle.style.left = (x - 12) + 'px';
+            sparkle.style.top = (y + scrollY - 12) + 'px';
+            girlWorld.appendChild(sparkle);
+
+            setTimeout(function() { 
+                if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+                if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple); 
+            }, 600);
+        }
+
+        // HEAVY SPIDERMAN WEB (BOYS ONLY)
+        function initBoyFeatures() {
+            var boyWorld = document.getElementById('world-boy');
+            var canvas = document.getElementById('spidey-canvas');
+            if (!canvas || !boyWorld) return;
+            var ctx = canvas.getContext('2d');
+            if (!ctx) return;
+            
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            var particles = [];
+            var mouse = { x: -1000, y: -1000 };
+
+            boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+            boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
+
+            for(var i=0; i<150; i++) {
+                particles.push({ 
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height, 
+                    vx: (Math.random() - 0.5)*1.5, 
+                    vy: (Math.random() - 0.5)*1.5 
+                });
+            }
+
+            function animateWeb() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for(var i=0; i<particles.length; i++) {
+                    var p = particles[i];
+                    p.x += p.vx; p.y += p.vy;
+                    
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath(); 
+                    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); 
+                    ctx.fillStyle = '#ff0000'; 
+                    ctx.fill();
+
+                    var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
+                    if(dist < 180) {
+                        ctx.beginPath(); 
+                        ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - dist/180) + ')'; 
+                        ctx.lineWidth = 1.2;
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.lineTo(mouse.x, mouse.y); 
+                        ctx.stroke();
+                    }
+                }
+                requestAnimationFrame(animateWeb);
+            }
+            animateWeb();
+        }
+
+        window.onload = function() {
+            window.addEventListener('touchstart', spawnSparkle, {passive: true});
+            window.addEventListener('click', spawnSparkle);
+            setupParallax('world-girl');
+            setupParallax('world-boy');
+        };
+    </script>
+</body>
+</html>
     
