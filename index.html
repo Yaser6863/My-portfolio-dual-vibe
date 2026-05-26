@@ -732,4 +732,60 @@
             var ctx = canvas.getContext('2d');
             if (!ctx) return;
             
-            function resizeCanva 
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            var particles = [];
+            var mouse = { x: -1000, y: -1000 };
+
+            boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+            boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
+
+            for(var i=0; i<150; i++) {
+                particles.push({ 
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height, 
+                    vx: (Math.random() - 0.5)*1.5, 
+                    vy: (Math.random() - 0.5)*1.5 
+                });
+            }
+
+            function animateWeb() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for(var i=0; i<particles.length; i++) {
+                    var p = particles[i];
+                    p.x += p.vx; p.y += p.vy;
+                    
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath(); 
+                    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); 
+                    ctx.fillStyle = '#ff0000'; 
+                    ctx.fill();
+
+                    var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
+                    if(dist < 180) {
+                        ctx.beginPath(); 
+                        ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - dist/180) + ')'; 
+                        ctx.lineWidth = 1.2;
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.lineTo(mouse.x, mouse.y); 
+                        ctx.stroke();
+                    }
+                }
+                requestAnimationFrame(animateWeb);
+            }
+            animateWeb();
+        }
+
+        window.onload = function() {
+            window.addEventListener('touchstart', spawnSparkle, {passive: true});
+            window.addEventListener('click', spawnSparkle);
+            setupParallax('world-girl');
+            setupParallax('world-boy');
+        };
+    </script>
+</body>
+</html> 
