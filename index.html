@@ -96,6 +96,25 @@
         }
         @keyframes pulseTap { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 10px 10px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
 
+        /* GIRL'S RED ROSE GOODBYE OVERLAY */
+        #girl-bye-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #050505; z-index: 9999999; display: none; flex-direction: column;
+            justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out;
+        }
+        .rose-icon { font-size: 6rem; margin-bottom: 20px; animation: floatRose 3s infinite ease-in-out; filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); }
+        @keyframes floatRose { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } }
+        .bye-text { color: #fff; font-size: 2.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,20,147,0.8); text-align: center; }
+
+        .bye-girl-btn {
+            background: rgba(255,255,255,0.3); border: 2px solid #ff1493; color: #ff1493; padding: 15px 40px;
+            font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px;
+            cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 30px; backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(255,20,147,0.2); margin-top: 10px;
+        }
+        .bye-girl-btn:hover { background: #ff1493; color: #fff; box-shadow: 0 0 30px #ff1493; transform: translateY(-5px); }
+
+
         /* =========================================
            GIRL WORLD
         ========================================= */
@@ -134,25 +153,6 @@
             animation: rippleAnim 0.6s ease-out forwards;
         }
         @keyframes rippleAnim { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } }
-
-        /* GIRL'S RED ROSE GOODBYE OVERLAY */
-        #girl-bye-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #050505; z-index: 9999999; display: none; flex-direction: column;
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out;
-        }
-        .rose-icon { font-size: 6rem; margin-bottom: 20px; animation: floatRose 3s infinite ease-in-out; filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); }
-        @keyframes floatRose { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } }
-        .bye-text { color: #fff; font-size: 2.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,20,147,0.8); text-align: center; }
-
-        .bye-girl-btn {
-            background: rgba(255,255,255,0.3); border: 2px solid #ff1493; color: #ff1493; padding: 15px 40px;
-            font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 30px; backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(255,20,147,0.2); margin-top: 10px;
-        }
-        .bye-girl-btn:hover { background: #ff1493; color: #fff; box-shadow: 0 0 30px #ff1493; transform: translateY(-5px); }
-
 
         /* =========================================
            BOY WORLD
@@ -200,13 +200,11 @@
             color: #ff0000; margin-top: -30px; pointer-events: none;
         }
 
-        /* SPOTIFY WRAPPERS */
         .spotify-wrap { width: 100%; max-width: 450px; border-radius: 15px; overflow: hidden; z-index: 10; opacity: 0; transform: translateY(50px); transition: 1s; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
         .spotify-wrap.visible { opacity: 1; transform: translateY(0); }
         .spotify-girl { border: 2px solid rgba(255,255,255,0.5); box-shadow: 0 15px 40px rgba(255,20,147,0.3); }
         .spotify-boy { border: 2px solid #550000; box-shadow: 0 15px 40px rgba(255,0,0,0.3); }
 
-        /* BOYS TERMINATE BUTTON & OFFLINE SCREEN */
         .terminate-btn {
             background: transparent; border: 2px solid #ff0000; color: #ff0000; padding: 15px 30px;
             font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 3px;
@@ -423,7 +421,7 @@
             var girlName = rawName !== "" ? rawName : "Haseen";
             var nameTag = '<span class="name-highlight">' + girlName + '</span>';
 
-            // AUTOPLAY ON ENTER CLICK (Plays sanam.mp3 from 45s, volume 30%)
+            // PLAY MUSIC
             var bgMusic = document.getElementById('bg-music');
             if (bgMusic) {
                 bgMusic.currentTime = 45;
@@ -434,11 +432,18 @@
                 }
             }
 
+            // SMART MEMORY LOGIC WITH SPECIFIC NAME CHECK
             var isReturning = false;
             try {
                 if (window.localStorage) {
-                    isReturning = localStorage.getItem('yaser_girl_visited') === 'true';
-                    localStorage.setItem('yaser_girl_visited', 'true');
+                    var savedName = localStorage.getItem('yaser_girl_name');
+                    if (savedName && savedName.toLowerCase() === girlName.toLowerCase()) {
+                        isReturning = true; // Same girl returned
+                    } else {
+                        // New girl or first time ever
+                        localStorage.setItem('yaser_girl_name', girlName);
+                        isReturning = false;
+                    }
                 }
             } catch (e) {}
 
@@ -456,7 +461,14 @@
                     greetingStr = "In raaton mein waise bhi neend kahan, par tumhara yun theherna meri bechaini aur badha raha hai, " + nameTag + ". Kuch raaz ki baatein karein? 🤫🌙";
                 }
             } else { 
-                greetingStr = "Wapas aana toh tay tha... " + nameTag + ", lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Nazrein jhukao mat, paas aao. 🦋";
+                // RANDOMIZER ADDED HERE FOR RETURNING USERS
+                var returnFlirts = [
+                    "Wapas aana toh tay tha... " + nameTag + ", lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Nazrein jhukao mat, paas aao. 🦋",
+                    "Phir se aa gayi? Ya toh tumhe is jagah ki aadat ho gayi hai, ya meri... dono hi baatein haseen hain, " + nameTag + ". 🖤",
+                    "Mujhe pata tha tum zaroor lautogi. In khamoshiyon mein jo kashish hai, wo tumhe door jane hi kahan degi, " + nameTag + "? ✨",
+                    "Ek baar aana ittefaq ho sakta hai, par baar-baar aana... is nazaqat ko main kya naam doon, " + nameTag + "? 🥀"
+                ];
+                greetingStr = returnFlirts[Math.floor(Math.random() * returnFlirts.length)];
             }
 
             var elGreeting = document.getElementById('dynamic-greeting');
@@ -484,7 +496,6 @@
             }
         }
 
-        // RED ROSE GOODBYE LOGIC (GIRLS)
         function triggerGirlBye() {
             var bgMusic = document.getElementById('bg-music');
             if(bgMusic) {
@@ -503,7 +514,6 @@
             }
         }
 
-        // SYSTEM MELTDOWN LOGIC (BOYS)
         function triggerMeltdown() {
             var btn = document.getElementById('terminate-btn');
             if(btn) btn.style.display = 'none';
@@ -528,7 +538,6 @@
             }, 1000);
         }
 
-        // PARALLAX EFFECT
         function setupParallax(worldId) {
             var world = document.getElementById(worldId);
             if (!world) return;
@@ -549,7 +558,6 @@
             });
         }
 
-        // SCROLL REVEAL CARDS
         function initScrollObserver() {
             if (!window.IntersectionObserver) return;
             var cards = document.querySelectorAll('.scroll-item');
@@ -561,7 +569,6 @@
             for (var j = 0; j < cards.length; j++) observer.observe(cards[j]);
         }
 
-        // MAGIC RIPPLES & EMOJIS (GIRLS ONLY)
         var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
         function spawnSparkle(e) {
             if (currentWorld !== 'world-girl') return;
@@ -595,7 +602,6 @@
             }, 600);
         }
 
-        // HEAVY SPIDERMAN WEB (BOYS ONLY)
         function initBoyFeatures() {
             var boyWorld = document.getElementById('world-boy');
             var canvas = document.getElementById('spidey-canvas');
@@ -660,4 +666,3 @@
     </script>
 </body>
 </html>
-    
