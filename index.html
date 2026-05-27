@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Dual Vibe - Premium Edition</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Nunito:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; -webkit-tap-highlight-color: transparent; }
-        /* FIXED: 100dvh for Black Patti Issue */
-        body, html { width: 100%; height: 100dvh; background: #000; overflow: hidden; font-family: 'Nunito', sans-serif; transition: background 0.5s; }
+        /* --- GLOBAL RESETS --- */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            text-decoration: none; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        body, html { 
+            width: 100%; 
+            height: 100dvh; 
+            background: #000; 
+            overflow: hidden; 
+            font-family: 'Nunito', sans-serif; 
+            transition: background 0.5s; 
+        }
 
         /* HIDE SCROLLBARS FOR CLEAN PREMIUM LOOK */
         ::-webkit-scrollbar { display: none; }
@@ -18,186 +33,590 @@
 
         /* --- GATEKEEPER ENTRY --- */
         #gate {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100dvh; display: flex; z-index: 99999;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100dvh; 
+            display: flex; 
+            z-index: 99999;
             transition: opacity 0.8s ease-in-out, transform 0.8s ease;
         }
+
         .door {
-            flex: 1; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer;
-            transition: flex 0.6s ease; font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 900;
-            border: none; outline: none; position: relative; overflow: hidden;
+            flex: 1; 
+            height: 100%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer;
+            transition: flex 0.6s ease; 
+            font-size: clamp(1.5rem, 4vw, 3rem); 
+            font-weight: 900;
+            border: none; 
+            outline: none; 
+            position: relative; 
+            overflow: hidden;
         }
-        .door-girl { background: linear-gradient(135deg, #ff1493, #ff69b4); color: #fff; text-shadow: 2px 2px 10px #ff007f; text-transform: uppercase; }
-        .door-boy { background: linear-gradient(135deg, #1a0000, #050505); color: #ff0000; border-left: 2px solid #ff0000; font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
-        .door:hover { flex: 1.4; }
+
+        .door-girl { 
+            background: linear-gradient(135deg, #ff1493, #ff69b4); 
+            color: #fff; 
+            text-shadow: 2px 2px 10px #ff007f; 
+            text-transform: uppercase; 
+        }
+
+        .door-boy { 
+            background: linear-gradient(135deg, #1a0000, #050505); 
+            color: #ff0000; 
+            border-left: 2px solid #ff0000; 
+            font-family: 'Montserrat', sans-serif; 
+            text-transform: uppercase; 
+        }
+
+        .door:hover { 
+            flex: 1.4; 
+        }
 
         .custom-emoji {
-            width: 1.2em; height: 1.2em; margin-left: 10px; display: inline-block; vertical-align: middle;
-            filter: drop-shadow(0 0 8px #ff1493); animation: breathe 2s infinite alternate; pointer-events: none;
+            width: 1.2em; 
+            height: 1.2em; 
+            margin-left: 10px; 
+            display: inline-block; 
+            vertical-align: middle;
+            filter: drop-shadow(0 0 8px #ff1493); 
+            animation: breathe 2s infinite alternate; 
+            pointer-events: none;
         }
-        @keyframes breathe { 0% { transform: scale(1); filter: drop-shadow(0 0 5px #ff1493); } 100% { transform: scale(1.1); filter: drop-shadow(0 0 15px #ffb3d9); } }
+
+        @keyframes breathe { 
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px #ff1493); } 
+            100% { transform: scale(1.1); filter: drop-shadow(0 0 15px #ffb3d9); } 
+        }
+
+        /* --- FLOATING MUSIC BUTTON (GIRL WORLD) --- */
+        #music-toggle-btn {
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            z-index: 999999;
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2); 
+            border: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(10px); 
+            color: #fff; 
+            font-size: 1.2rem;
+            display: none; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            box-shadow: 0 5px 15px rgba(255,20,147,0.3);
+            transition: all 0.3s ease;
+        }
+
+        #music-toggle-btn:hover { 
+            background: rgba(255, 255, 255, 0.4); 
+            transform: scale(1.1); 
+        }
 
         /* --- NAME MODAL --- */
         #name-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            background: rgba(0,0,0,0.8); z-index: 100000; justify-content: center; align-items: center;
-            backdrop-filter: blur(10px); flex-direction: column; opacity: 0; transition: opacity 0.5s;
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100dvh;
+            background: rgba(0,0,0,0.8); 
+            z-index: 100000; 
+            justify-content: center; 
+            align-items: center;
+            backdrop-filter: blur(10px); 
+            flex-direction: column; 
+            opacity: 0; 
+            transition: opacity 0.5s;
         }
+
         .modal-box {
-            background: rgba(255, 105, 180, 0.2); padding: 30px; border-radius: 20px;
-            text-align: center; color: white; box-shadow: 0 10px 40px rgba(255,20,147,0.5); width: 90%; max-width: 350px;
-            transform: translateY(50px); transition: transform 0.5s; border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255, 105, 180, 0.2); 
+            padding: 30px; 
+            border-radius: 20px;
+            text-align: center; 
+            color: white; 
+            box-shadow: 0 10px 40px rgba(255,20,147,0.5); 
+            width: 90%; 
+            max-width: 350px;
+            transform: translateY(50px); 
+            transition: transform 0.5s; 
+            border: 1px solid rgba(255,255,255,0.4);
             backdrop-filter: blur(20px);
         }
-        .modal-box h2 { margin-bottom: 20px; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; }
-        .modal-box input {
-            width: 100%; padding: 15px; border-radius: 10px; border: none; font-family: 'Nunito', sans-serif;
-            font-size: 1.2rem; font-weight: 700; text-align: center; color: #ff1493; outline: none; background: rgba(255,255,255,0.9);
+
+        .modal-box h2 { 
+            margin-bottom: 20px; 
+            font-weight: 900; 
+            font-size: 1.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
         }
+
+        .modal-box input {
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 10px; 
+            border: none; 
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            text-align: center; 
+            color: #ff1493; 
+            outline: none; 
+            background: rgba(255,255,255,0.9);
+        }
+
         .modal-box button {
-            margin-top: 20px; width: 100%; padding: 15px; background: #fff; color: #ff1493;
-            border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 900; cursor: pointer;
-            font-family: 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.3); transition: 0.3s;
+            margin-top: 20px; 
+            width: 100%; 
+            padding: 15px; 
+            background: #fff; 
+            color: #ff1493;
+            border: none; 
+            border-radius: 10px; 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3); 
+            transition: 0.3s;
         }
 
         /* --- WORLDS --- */
         .world {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100dvh; display: none; opacity: 0;
-            overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; transition: opacity 1s ease-in-out;
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100dvh; 
+            display: none; 
+            opacity: 0;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+            transition: opacity 1s ease-in-out;
         }
-        .section { width: 100%; min-height: 100dvh; display: flex; justify-content: center; align-items: center; position: relative; padding: 40px 20px; overflow: hidden; }
+
+        .section { 
+            width: 100%; 
+            min-height: 100dvh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative; 
+            padding: 40px 20px; 
+            overflow: hidden; 
+        }
 
         .scroll-down-icon {
-            position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            font-size: 0.8rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
-            animation: floatUpDown 2s infinite ease-in-out; z-index: 50; opacity: 0.8;
+            position: absolute; 
+            bottom: 5vh; 
+            left: 50%; 
+            transform: translateX(-50%);
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 5px;
+            font-size: 0.8rem; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+            animation: floatUpDown 2s infinite ease-in-out; 
+            z-index: 50; 
+            opacity: 0.8;
         }
-        .scroll-down-icon::after { content: '↓'; font-size: 1.5rem; }
-        @keyframes floatUpDown { 0%, 100% {transform: translate(-50%, 0);} 50% {transform: translate(-50%, 10px);} }
 
-        /* Perfect Aligned Parallax Texts */
-        .para-bold {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; text-align: center; white-space: nowrap;
-            font-size: clamp(3.5rem, 18vw, 12rem); font-weight: 900; text-transform: uppercase;
-            color: transparent; z-index: 0; pointer-events: none;
+        .scroll-down-icon::after { 
+            content: '↓'; 
+            font-size: 1.5rem; 
         }
+
+        @keyframes floatUpDown { 
+            0%, 100% {transform: translate(-50%, 0);} 
+            50% {transform: translate(-50%, 10px);} 
+        }
+
+        /* Parallax Texts */
+        .para-bold {
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 100%; 
+            text-align: center; 
+            white-space: nowrap;
+            font-size: clamp(3.5rem, 18vw, 12rem); 
+            font-weight: 900; 
+            text-transform: uppercase;
+            color: transparent; 
+            z-index: 0; 
+            pointer-events: none;
+        }
+
         .para-quote {
-            position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
-            width: 90%; text-align: center; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #fff;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.9); font-style: italic; z-index: 0; pointer-events: none; letter-spacing: 1px;
+            position: absolute; 
+            top: 12%; 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: 90%; 
+            text-align: center; 
+            font-size: clamp(1rem, 4vw, 1.5rem); 
+            font-weight: 700; 
+            color: #fff;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.9); 
+            font-style: italic; 
+            z-index: 0; 
+            pointer-events: none; 
+            letter-spacing: 1px;
         }
 
         .tap-badge {
-            position: absolute; top: 15px; right: 15px; font-size: 0.6rem; font-family: 'Nunito', sans-serif;
-            background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5);
-            padding: 4px 8px; border-radius: 20px; font-weight: 900; letter-spacing: 1px;
-            animation: pulseTap 1.5s infinite; color: inherit; text-transform: uppercase; pointer-events: none;
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            font-size: 0.6rem; 
+            font-family: 'Nunito', sans-serif;
+            background: rgba(255,255,255,0.2); 
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 4px 8px; 
+            border-radius: 20px; 
+            font-weight: 900; 
+            letter-spacing: 1px;
+            animation: pulseTap 1.5s infinite; 
+            color: inherit; 
+            text-transform: uppercase; 
+            pointer-events: none;
         }
-        @keyframes pulseTap { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 10px 10px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
+
+        @keyframes pulseTap { 
+            0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 
+            70% { box-shadow: 0 0 10px 10px rgba(255,255,255,0); } 
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } 
+        }
 
         /* GIRL'S RED ROSE GOODBYE OVERLAY */
         #girl-bye-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; 
-            background: #050505; z-index: 9999999; display: none; flex-direction: column;
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100dvh; 
+            background: #050505; 
+            z-index: 9999999; 
+            display: none; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            opacity: 0; 
+            transition: opacity 1.5s ease-in-out;
         }
-        .rose-icon { font-size: 6rem; margin-bottom: 20px; animation: floatRose 3s infinite ease-in-out; filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); }
-        @keyframes floatRose { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } }
-        .bye-text { color: #fff; font-size: 2.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,20,147,0.8); text-align: center; }
+
+        .rose-icon { 
+            font-size: 6rem; 
+            margin-bottom: 20px; 
+            animation: floatRose 3s infinite ease-in-out; 
+            filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); 
+        }
+
+        @keyframes floatRose { 
+            0%, 100% { transform: translateY(0) scale(1); } 
+            50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } 
+        }
+
+        .bye-text { 
+            color: #fff; 
+            font-size: 2.5rem; 
+            font-family: 'Nunito', sans-serif; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-shadow: 0 0 15px rgba(255,20,147,0.8); 
+            text-align: center; 
+        }
 
         .bye-girl-btn {
-            background: rgba(255,255,255,0.3); border: 2px solid #ff1493; color: #ff1493; padding: 15px 40px;
-            font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 30px; backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(255,20,147,0.2); margin-top: 10px;
+            background: rgba(255,255,255,0.3); 
+            border: 2px solid #ff1493; 
+            color: #ff1493; 
+            padding: 15px 40px;
+            font-family: 'Nunito', sans-serif; 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+            cursor: pointer; 
+            text-transform: uppercase; 
+            transition: 0.3s; 
+            border-radius: 30px; 
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(255,20,147,0.2); 
+            margin-top: 10px;
         }
-        .bye-girl-btn:hover { background: #ff1493; color: #fff; box-shadow: 0 0 30px #ff1493; transform: translateY(-5px); }
+
+        .bye-girl-btn:hover { 
+            background: #ff1493; 
+            color: #fff; 
+            box-shadow: 0 0 30px #ff1493; 
+            transform: translateY(-5px); 
+        }
 
 
         /* =========================================
            GIRL WORLD & CUTE GIFs
         ========================================= */
-        #world-girl { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #fff; cursor: crosshair; }
-        #world-girl .scroll-down-icon { color: #ff1493; text-shadow: 0 2px 5px rgba(255,20,147,0.5); }
-        #world-girl .para-bold { -webkit-text-stroke: 2px rgba(255, 20, 147, 0.15); font-family: 'Nunito', sans-serif; }
-        #world-girl .para-quote { color: #ff1493; text-shadow: none; font-weight: 900; }
+        #world-girl { 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); 
+            color: #fff; 
+            cursor: crosshair; 
+        }
+        
+        #world-girl .scroll-down-icon { 
+            color: #ff1493; 
+            text-shadow: 0 2px 5px rgba(255,20,147,0.5); 
+        }
+        
+        #world-girl .para-bold { 
+            -webkit-text-stroke: 2px rgba(255, 20, 147, 0.15); 
+            font-family: 'Nunito', sans-serif; 
+        }
+        
+        #world-girl .para-quote { 
+            color: #ff1493; 
+            text-shadow: none; 
+            font-weight: 900; 
+        }
+        
+        .name-highlight { 
+            color: #ff1493; 
+            text-shadow: 0 0 8px rgba(255,20,147,0.5); 
+            font-style: italic; 
+            font-weight: 900; 
+            letter-spacing: 1px; 
+        }
 
-        .name-highlight { color: #ff1493; text-shadow: 0 0 8px rgba(255,20,147,0.5); font-style: italic; font-weight: 900; letter-spacing: 1px; }
-
-        /* UPGRADE: CUTE GIF STYLES */
         .cute-gif {
-            width: 120px; height: 120px; object-fit: cover; border-radius: 20px; 
-            margin: 0 auto 15px auto; display: block; box-shadow: 0 10px 20px rgba(255,20,147,0.2);
+            width: 120px; 
+            height: 120px; 
+            object-fit: cover; 
+            border-radius: 20px; 
+            margin: 0 auto 15px auto; 
+            display: block; 
+            box-shadow: 0 10px 20px rgba(255,20,147,0.2);
             animation: floatGif 3s infinite ease-in-out;
         }
-        @keyframes floatGif { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        @keyframes floatGif { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-10px); } 
+        }
 
         .g-card {
-            background: rgba(255, 255, 255, 0.25); border-radius: 25px; padding: 35px 25px; width: 100%; max-width: 450px; z-index: 10;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.6); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            color: #333; opacity: 0; transform: scale(0.9) translateY(50px); transition: opacity 0.8s, transform 0.8s;
-            display: flex; flex-direction: column; text-align: center; gap: 15px; text-decoration: none; position: relative;
+            background: rgba(255, 255, 255, 0.25); 
+            border-radius: 25px; 
+            padding: 35px 25px; 
+            width: 100%; 
+            max-width: 450px; 
+            z-index: 10;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); 
+            border: 1px solid rgba(255,255,255,0.6); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            color: #333; 
+            opacity: 0; 
+            transform: scale(0.9) translateY(50px); 
+            transition: opacity 0.8s, transform 0.8s;
+            display: flex; 
+            flex-direction: column; 
+            text-align: center; 
+            gap: 15px; 
+            text-decoration: none; 
+            position: relative;
         }
-        .g-card.visible { opacity: 1; transform: scale(1) translateY(0); }
+
+        .g-card.visible { 
+            opacity: 1; 
+            transform: scale(1) translateY(0); 
+        }
         
-        .g-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; color: #ff1493; }
-        .g-title i { font-size: 1.8rem; display: block; margin-bottom: 10px; color: #ff69b4; }
-        .g-flirt { font-size: 1.1rem; font-weight: 700; line-height: 1.6; color: #444; }
+        .g-title { 
+            font-size: 1.4rem; 
+            font-weight: 900; 
+            margin-bottom: 8px; 
+            text-transform: uppercase; 
+            color: #ff1493; 
+        }
+
+        .g-title i { 
+            font-size: 1.8rem; 
+            display: block; 
+            margin-bottom: 10px; 
+            color: #ff69b4; 
+        }
+
+        .g-flirt { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            line-height: 1.6; 
+            color: #444; 
+        }
 
         .main-flirt {
-            background: rgba(255, 255, 255, 0.3); padding: 30px; border-radius: 20px; text-align: center;
-            font-size: 1.3rem; font-weight: 900; box-shadow: 0 15px 35px rgba(0,0,0,0.1); color: #333;
-            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.6); z-index: 10; line-height: 1.6; width: 90%; max-width: 450px;
+            background: rgba(255, 255, 255, 0.3); 
+            padding: 30px; 
+            border-radius: 20px; 
+            text-align: center;
+            font-size: 1.3rem; 
+            font-weight: 900; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            color: #333;
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255,255,255,0.6); 
+            z-index: 10; 
+            line-height: 1.6; 
+            width: 90%; 
+            max-width: 450px;
         }
 
-        .sparkle { position: absolute; pointer-events: none !important; z-index: 999999; font-size: 24px; animation: pop 1s ease-out forwards; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
-        @keyframes pop { 0% { transform: scale(0) rotate(0deg); opacity: 1; } 100% { transform: scale(1.2) rotate(45deg) translateY(-40px); opacity: 0; } }
+        .sparkle { 
+            position: absolute; 
+            pointer-events: none !important; 
+            z-index: 999999; 
+            font-size: 24px; 
+            animation: pop 1s ease-out forwards; 
+            text-shadow: 0 0 10px rgba(255,255,255,0.8); 
+        }
+
+        @keyframes pop { 
+            0% { transform: scale(0) rotate(0deg); opacity: 1; } 
+            100% { transform: scale(1.2) rotate(45deg) translateY(-40px); opacity: 0; } 
+        }
         
         .ripple {
-            position: absolute; border-radius: 50%; border: 2px solid rgba(255, 20, 147, 0.6); pointer-events: none !important;
-            width: 20px; height: 20px; transform: translate(-50%, -50%) scale(1); z-index: 999998;
+            position: absolute; 
+            border-radius: 50%; 
+            border: 2px solid rgba(255, 20, 147, 0.6); 
+            pointer-events: none !important;
+            width: 20px; 
+            height: 20px; 
+            transform: translate(-50%, -50%) scale(1); 
+            z-index: 999998;
             animation: rippleAnim 0.6s ease-out forwards;
         }
-        @keyframes rippleAnim { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } }
+
+        @keyframes rippleAnim { 
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+            100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } 
+        }
+
 
         /* =========================================
            BOY WORLD & BLOOD RED GLOW
         ========================================= */
-        #world-boy { background: #050505; font-family: 'Montserrat', sans-serif; position: relative; }
+        #world-boy { 
+            background: #050505; 
+            font-family: 'Montserrat', sans-serif; 
+            position: relative; 
+        }
+
+        #spidey-canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100dvh; 
+            z-index: 1; 
+            pointer-events: none; 
+            transition: opacity 1s; 
+        }
         
-        #spidey-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; z-index: 1; pointer-events: none; transition: opacity 1s; }
-        
-        .glitch-text { animation: glitch 3s infinite; }
+        .glitch-text { 
+            animation: glitch 3s infinite; 
+        }
+
         @keyframes glitch { 
             0%, 100% { text-shadow: 2px 2px 0px rgba(255,0,0,0.5), -2px -2px 0px rgba(0,0,255,0.5); }
             50% { text-shadow: -2px 2px 0px rgba(255,0,0,0.5), 2px -2px 0px rgba(0,0,255,0.5); }
         }
 
-        #world-boy .scroll-down-icon { color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.8); }
-        #world-boy .para-bold { -webkit-text-stroke: 4px rgba(255, 0, 0, 0.3); font-family: 'Montserrat', sans-serif; }
-        #world-boy .para-quote { color: #eee; text-transform: uppercase; letter-spacing: 3px; font-style: normal; }
+        #world-boy .scroll-down-icon { 
+            color: #ff0000; 
+            text-shadow: 0 0 10px rgba(255,0,0,0.8); 
+        }
+
+        #world-boy .para-bold { 
+            -webkit-text-stroke: 4px rgba(255, 0, 0, 0.3); 
+            font-family: 'Montserrat', sans-serif; 
+        }
+
+        #world-boy .para-quote { 
+            color: #eee; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-style: normal; 
+        }
 
         .yaser-name { 
-            font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; color: #ff0000; letter-spacing: 10px; z-index: 10; margin-bottom: 10px; 
+            font-size: clamp(4rem, 15vw, 8rem); 
+            font-weight: 900; 
+            color: #ff0000; 
+            letter-spacing: 10px; 
+            z-index: 10; 
+            margin-bottom: 10px; 
             text-transform: uppercase;
             text-shadow: 2px 2px 0px #880000, 4px 4px 0px #660000, 6px 6px 0px #440000, 8px 8px 0px #220000, 10px 10px 30px rgba(255,0,0,0.8);
             transform: perspective(500px) rotateX(10deg);
         }
         
-        .yaser-bio { font-size: clamp(0.7rem, 2.5vw, 1.2rem); font-weight: 700; color: #fff; letter-spacing: 2px; text-transform: uppercase; z-index: 10; border-top: 1px solid #550000; border-bottom: 1px solid #550000; padding: 10px 0; text-align: center; }
+        .yaser-bio { 
+            font-size: clamp(0.7rem, 2.5vw, 1.2rem); 
+            font-weight: 700; 
+            color: #fff; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            z-index: 10; 
+            border-top: 1px solid #550000; 
+            border-bottom: 1px solid #550000; 
+            padding: 10px 0; 
+            text-align: center; 
+        }
 
         .b-card {
-            background: rgba(10, 10, 10, 0.85); border: 2px solid #550000; width: 100%; max-width: 450px;
-            padding: 30px; border-radius: 15px; color: #fff; z-index: 10;
-            box-shadow: 0 20px 50px rgba(255,0,0,0.15); backdrop-filter: blur(10px); cursor: pointer;
-            opacity: 0; transform: scale(0.9) translateY(50px); transition: all 0.4s ease; display: block; position: relative; overflow: hidden;
+            background: rgba(10, 10, 10, 0.85); 
+            border: 2px solid #550000; 
+            width: 100%; 
+            max-width: 450px;
+            padding: 30px; 
+            border-radius: 15px; 
+            color: #fff; 
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(255,0,0,0.15); 
+            backdrop-filter: blur(10px); 
+            cursor: pointer;
+            opacity: 0; 
+            transform: scale(0.9) translateY(50px); 
+            transition: all 0.4s ease; 
+            display: block; 
+            position: relative; 
+            overflow: hidden;
         }
-        .b-card.visible { opacity: 1; transform: scale(1) translateY(0); border-color: #ff0000; box-shadow: 0 20px 60px rgba(255,0,0,0.4); }
+
+        .b-card.visible { 
+            opacity: 1; 
+            transform: scale(1) translateY(0); 
+            border-color: #ff0000; 
+            box-shadow: 0 20px 60px rgba(255,0,0,0.4); 
+        }
         
-        /* UPGRADE: BLOOD RED GLOW ON CLICK */
         .b-card.glow-red {
             border-color: #ff0000 !important;
             box-shadow: 0 0 40px rgba(255, 0, 0, 0.9), inset 0 0 20px rgba(255, 0, 0, 0.5) !important;
@@ -205,531 +624,35 @@
             transform: scale(0.95) !important; 
         }
 
-        .b-num { font-size: 5rem; color: #ff0000; font-weight: 900; line-height: 1; opacity: 0.9; text-shadow: 4px 4px 0px #330000; margin-bottom: 10px; display: block; font-family: 'Montserrat', sans-serif;}
-        .b-title { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; }
-        .b-title i { font-size: 2rem; color: #fff; }
-
-        .tap-badge-boy {
-            float: right; font-size: 0.7rem; font-family: 'Montserrat', sans-serif;
-            background: rgba(255,0,0,0.2); border: 1px solid rgba(255,0,0,0.5);
-            padding: 4px 10px; border-radius: 5px; font-weight: 900; letter-spacing: 2px;
-            color: #ff0000; margin-top: -30px; pointer-events: none;
+        .b-num { 
+            font-size: 5rem; 
+            color: #ff0000; 
+            font-weight: 900; 
+            line-height: 1; 
+            opacity: 0.9; 
+            text-shadow: 4px 4px 0px #330000; 
+            margin-bottom: 10px; 
+            display: block; 
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .spotify-wrap { width: 100%; max-width: 450px; border-radius: 15px; overflow: hidden; z-index: 10; opacity: 0; transform: translateY(50px); transition: 1s; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        .spotify-wrap.visible { opacity: 1; transform: translateY(0); }
-        .spotify-girl { border: 2px solid rgba(255,255,255,0.5); box-shadow: 0 15px 40px rgba(255,20,147,0.3); }
-        .spotify-boy { border: 2px solid #550000; box-shadow: 0 15px 40px rgba(255,0,0,0.3); }
-
-        .terminate-btn {
-            background: transparent; border: 2px solid #ff0000; color: #ff0000; padding: 15px 30px;
-            font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 3px;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 5px; margin-top: 20px; z-index: 100; position: relative; overflow: hidden;
-        }
-        .terminate-btn:hover { background: #ff0000; color: #000; box-shadow: 0 0 30px #ff0000; }
-        
-        #offline-msg { 
-            display: none; color: #ff0000; font-size: clamp(2.5rem, 8vw, 5rem); 
-            font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 20px red; 
-            animation: glitch 0.3s infinite; 
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 100%; text-align: center; z-index: 999999; 
+        .b-title { 
+            font-size: 1.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
         }
 
-    </style>
-</head>
-<body>
-
-    <audio id="bg-music" src="sanam.mp3" preload="auto"></audio>
-    <audio id="meme-audio" src="fahhh.mp3" preload="auto"></audio>
-    <audio id="click-audio" src="click.mp3" preload="auto"></audio>
-
-    <div id="gate">
-        <button class="door door-girl" onclick="openGirlModal()">
-            FOR HER 
-            <svg class="custom-emoji" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 85 C 15 55, 5 25, 25 15 C 40 8, 50 25, 50 25 C 50 25, 60 8, 75 15 C 95 25, 85 55, 50 85 Z" fill="url(#pinkGradient)"/>
-                <path d="M50 70 C 30 50, 20 30, 35 25 C 45 20, 50 35, 50 35 C 50 35, 55 20, 65 25 C 80 30, 70 50, 50 70 Z" fill="rgba(255, 255, 255, 0.4)"/>
-                <defs>
-                    <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ff1493" />
-                        <stop offset="100%" stop-color="#ffb3d9" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </button>
-        <button class="door door-boy" onclick="enterBoyWorld()">FOR HIM 🕷️</button>
-    </div>
-
-    <div id="name-modal">
-        <div class="modal-box">
-            <h2>Kaun hai wo haseen?</h2>
-            <input type="text" id="girl-name-input" placeholder="Naam likho..." autocomplete="off">
-            <button onclick="processGirlName()">ENTER</button>
-        </div>
-    </div>
-
-    <div id="girl-bye-overlay">
-        <div class="rose-icon">🌹</div>
-        <div class="bye-text">Bye, Take care<br><span style="font-size:1.5rem; color:#ffb3d9; font-weight:700; margin-top: 10px; display: block;">Alvida...</span></div>
-    </div>
-
-    <div id="world-girl" class="world">
-
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">NOOR</div>
-            <div class="main-flirt">
-                <img src="start.gif" class="cute-gif" alt="Cute Start">
-                <span id="dynamic-greeting"></span>
-            </div>
-            <div class="scroll-down-icon">Scroll</div>
-        </div>
-        
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">NASHA</div>
-            <a href="https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==" class="g-card scroll-item">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="insta.gif" class="cute-gif" alt="Insta Cat">
-                <div class="g-title"><i class="fab fa-instagram"></i> Instagram</div>
-                <div class="g-flirt" id="flirt-insta"></div>
-            </a>
-        </div>
-        
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.25">AADAT</div>
-            <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="g-card scroll-item">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="snap.gif" class="cute-gif" alt="Snap Cat">
-                <div class="g-title"><i class="fab fa-snapchat-ghost"></i> Snapchat</div>
-                <div class="g-flirt" id="flirt-snap"></div>
-            </a>
-        </div>
-        
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.1">RAATEN</div>
-            <a href="https://api.whatsapp.com/send?phone=919356047251" class="g-card scroll-item">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="whatsapp.gif" class="cute-gif" alt="WhatsApp Cat">
-                <div class="g-title"><i class="fab fa-whatsapp"></i> WhatsApp</div>
-                <div class="g-flirt" id="flirt-wp"></div>
-            </a>
-        </div>
-        
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">RAAZ</div>
-            <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="g-card scroll-item">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="secret.gif" class="cute-gif" alt="Secret Cat">
-                <div class="g-title"><i class="fab fa-instagram"></i> Secret Vibe</div>
-                <div class="g-flirt" id="flirt-secret"></div>
-            </a>
-        </div>
-
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">MELODY</div>
-            <div class="spotify-wrap spotify-girl scroll-item">
-                <iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">ALVIDA</div>
-            <div class="scroll-item" style="text-align: center; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <img src="end.gif" class="cute-gif" alt="Bye Cat">
-                <div class="g-flirt" style="color: #fff; text-shadow: 0 0 10px #ff1493; font-size: 1.2rem;">Safar yahan khatam hota hai...</div>
-                <button class="bye-girl-btn" onclick="triggerGirlBye()">Say Goodbye 🌹</button>
-            </div>
-        </div>
-        <div style="height: 5vh;"></div>
-    </div>
-
-    <div id="world-boy" class="world">
-        <div id="offline-msg">SYSTEM OFFLINE<br><span style="font-size: 3.5rem; text-shadow: none; display: inline-block; margin-top: 15px; animation: none;">😂</span></div>
-        
-        <canvas id="spidey-canvas"></canvas>
-        
-        <div class="section boy-content" style="flex-direction: column;">
-            <div class="yaser-name">YASER</div>
-            <div class="yaser-bio">Science 🧬  |  Code 💻  |  Web 🌐  |  Tech ⚙️</div>
-            <div class="scroll-down-icon" style="bottom: 10vh;">Scroll</div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SPIDERMAN</div>
-            <div class="para-quote para-layer center-x" data-speed="0.35">"With great power comes great responsibility."</div>
-            
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">01</span>
-                <span class="b-title"><i class="fab fa-instagram"></i> Main Profile</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.25">SHADOWS</div>
-            <div class="para-quote para-layer center-x" data-speed="0.45">"We operate in the dark."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">02</span>
-                <span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.1">WEB-SLINGER</div>
-            <div class="para-quote para-layer center-x" data-speed="0.3">"My spider-sense is tingling."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">03</span>
-                <span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">VENOM</div>
-            <div class="para-quote para-layer center-x" data-speed="0.4">"Embrace the darkness."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://api.whatsapp.com/send?phone=919356047251')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">04</span>
-                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div>
-            <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
-            <div class="spotify-wrap spotify-boy scroll-item">
-                <iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-        </div>
-
-        <div class="section boy-content end-screen" style="flex-direction: column; text-align: center; justify-content: center;">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">SYSTEM</div>
-            <button class="terminate-btn" id="terminate-btn" onclick="triggerMeltdown()">TERMINATE CONNECTION</button>
-        </div>
-        <div style="height: 5vh;" class="boy-content"></div>
-    </div>
-
-    <script>
-        var isWorldActive = false;
-        var currentWorld = "";
-
-        function openGirlModal() {
-            if (isWorldActive) return;
-            var modal = document.getElementById('name-modal');
-            if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(function() {
-                    modal.style.opacity = '1';
-                    var box = document.querySelector('.modal-box');
-                    if(box) box.style.transform = 'translateY(0)';
-                }, 10);
-            }
+        .b-title i { 
+            font-size: 2rem; 
+            color: #fff; 
         }
 
-        function enterBoyWorld() {
-            if (isWorldActive) return;
-            triggerWorld('world-boy');
-        }
-
-        function triggerWorld(wId) {
-            isWorldActive = true;
-            currentWorld = wId;
-            var gate = document.getElementById('gate');
-            var world = document.getElementById(wId);
-            
-            if (gate && world) {
-                gate.style.transform = 'scale(1.2)';
-                gate.style.opacity = '0';
-                setTimeout(function() {
-                    gate.style.display = 'none';
-                    world.style.display = 'block';
-                    setTimeout(function() {
-                        world.style.opacity = '1';
-                        initScrollObserver();
-                        if (wId === 'world-boy') initBoyFeatures();
-                    }, 50);
-                }, 800);
-            }
-        }
-
-        // UPGRADE: DELAYED HACKER CLICK FUNCTION
-        function boyCardClick(element, targetUrl) {
-            // Play click sound
-            var clickSnd = document.getElementById('click-audio');
-            if (clickSnd) {
-                clickSnd.currentTime = 0;
-                clickSnd.volume = 1.0;
-                var playProm = clickSnd.play();
-                if (playProm !== undefined) {
-                    playProm.catch(function(e) { console.log("Audio block prevented play", e); });
-                }
-            }
-
-            // Add the blood red glow effect
-            element.classList.add('glow-red');
-
-            // Wait 500ms (0.5s), remove glow and redirect
-            setTimeout(function() {
-                element.classList.remove('glow-red');
-                window.location.href = targetUrl;
-            }, 500);
-        }
-
-        function processGirlName() {
-            var inputElem = document.getElementById('girl-name-input');
-            var rawName = (inputElem && inputElem.value) ? inputElem.value.trim() : "";
-            var girlName = rawName !== "" ? rawName : "Haseen";
-            var nameTag = '<span class="name-highlight">' + girlName + '</span>';
-
-            var bgMusic = document.getElementById('bg-music');
-            if (bgMusic) {
-                bgMusic.currentTime = 45;
-                bgMusic.volume = 0.3;
-                var playProm = bgMusic.play();
-                if (playProm !== undefined) {
-                    playProm.catch(function(e) { console.log("Audio block prevented play", e); });
-                }
-            }
-
-            var isReturning = false;
-            try {
-                if (window.localStorage) {
-                    var savedName = localStorage.getItem('yaser_girl_name');
-                    if (savedName && savedName.toLowerCase() === girlName.toLowerCase()) {
-                        isReturning = true; 
-                    } else {
-                        localStorage.setItem('yaser_girl_name', girlName);
-                        isReturning = false;
-                    }
-                }
-            } catch (e) {}
-
-            var currentHour = new Date().getHours();
-            var greetingStr = "";
-
-            if (!isReturning) { 
-                if (currentHour >= 5 && currentHour < 12) {
-                    greetingStr = "Suraj ki pehli kiran se pehle, mere khayalon mein aane ki aadat kab se ho gayi, " + nameTag + "? Subah aur bhi haseen lagne lagi hai ab. ✨";
-                } else if (currentHour >= 12 && currentHour < 17) {
-                    greetingStr = "Dopahar ki is shant khamoshi mein, tumhara yun chupke se aana... " + nameTag + ", in nazaqaton ka main kya karun? Aao, theher jao kuch der. 🤎";
-                } else if (currentHour >= 17 && currentHour < 21) {
-                    greetingStr = "Shaam dhali aur tumhari yaad chali aayi. Par aaj toh tum khud aayi ho, " + nameTag + ". Waise, is nashiile waqt mein thoda sharmaana lazmi hai. 🫣🌆";
-                } else {
-                    greetingStr = "In raaton mein waise bhi neend kahan, par tumhara yun theherna meri bechaini aur badha raha hai, " + nameTag + ". Kuch raaz ki baatein karein? 🤫🌙";
-                }
-            } else { 
-                var returnFlirts = [
-                    "Wapas aana toh tay tha... " + nameTag + ", lagta hai in khayalon ki qaid tumhe bhi pasand aane lagi hai. Nazrein jhukao mat, paas aao. 🦋",
-                    "Phir se aa gayi? Ya toh tumhe is jagah ki aadat ho gayi hai, ya meri... dono hi baatein haseen hain, " + nameTag + ". 🖤",
-                    "Mujhe pata tha tum zaroor lautogi. In khamoshiyon mein jo kashish hai, wo tumhe door jane hi kahan degi, " + nameTag + "? ✨",
-                    "Ek baar aana ittefaq ho sakta hai, par baar-baar aana... is nazaqat ko main kya naam doon, " + nameTag + "? 🥀"
-                ];
-                greetingStr = returnFlirts[Math.floor(Math.random() * returnFlirts.length)];
-            }
-
-            var elGreeting = document.getElementById('dynamic-greeting');
-            if(elGreeting) elGreeting.innerHTML = greetingStr;
-
-            var elInsta = document.getElementById('flirt-insta');
-            if(elInsta) elInsta.innerHTML = "Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style='color:#ff1493;'>" + girlName + "</b>. Ek baar nazar utha kar toh dekho... 🫣✨";
-
-            var elSnap = document.getElementById('flirt-snap');
-            if(elSnap) elSnap.innerHTML = "Bina kisi filter ke bhi tum is qadar haseen ho, <b style='color:#ff1493;'>" + girlName + "</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖";
-
-            var elWp = document.getElementById('flirt-wp');
-            if(elWp) elWp.innerHTML = "Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style='color:#ff1493;'>" + girlName + "</b>. 🥱🌙";
-
-            var elSec = document.getElementById('flirt-secret');
-            if(elSec) elSec.innerHTML = "Tumhari in gahri aankhon mein jo ankahe raaz chhupe hain na, <b style='color:#ff1493;'>" + girlName + "</b>... mera dil karta hai bas unme doob jaun. Shhh... 🤫🤎";
-
-            var modal = document.getElementById('name-modal');
-            if (modal) {
-                modal.style.opacity = '0';
-                setTimeout(function() {
-                    modal.style.display = 'none';
-                    triggerWorld('world-girl');
-                }, 500);
-            }
-        }
-
-        function triggerGirlBye() {
-            var bgMusic = document.getElementById('bg-music');
-            if(bgMusic) {
-                var fadeAudio = setInterval(function () {
-                    if (bgMusic.volume > 0.05) { bgMusic.volume -= 0.05; }
-                    else { bgMusic.pause(); clearInterval(fadeAudio); }
-                }, 200);
-            }
-
-            var overlay = document.getElementById('girl-bye-overlay');
-            if(overlay) {
-                overlay.style.display = 'flex';
-                setTimeout(function() {
-                    overlay.style.opacity = '1';
-                }, 50);
-            }
-        }
-
-        function triggerMeltdown() {
-            var btn = document.getElementById('terminate-btn');
-            if(btn) btn.style.display = 'none';
-
-            var bgMusic = document.getElementById('bg-music');
-            if(bgMusic) bgMusic.pause();
-
-            var memeSnd = document.getElementById('meme-audio');
-            if(memeSnd) {
-                memeSnd.volume = 1.0;
-                memeSnd.play().catch(function(e){ console.log("Meme audio blocked", e); });
-            }
-
-            var boyWorld = document.getElementById('world-boy');
-            if(boyWorld) boyWorld.style.overflow = 'hidden';
-
-            var sections = document.querySelectorAll('#world-boy .boy-content');
-            for(var i = 0; i < sections.length; i++) {
-                sections[i].style.transition = 'all 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
-                var randomAngle = (Math.random() * 60) - 30; 
-                sections[i].style.transform = 'translateY(150vh) rotate(' + randomAngle + 'deg)';
-                sections[i].style.opacity = '0';
-            }
-
-            setTimeout(function() {
-                var canvas = document.getElementById('spidey-canvas');
-                if(canvas) canvas.style.opacity = '0';
-                
-                var msg = document.getElementById('offline-msg');
-                if(msg) msg.style.display = 'block';
-            }, 1000);
-        }
-
-        function setupParallax(worldId) {
-            var world = document.getElementById(worldId);
-            if (!world) return;
-            var layers = world.querySelectorAll('.para-layer');
-            world.addEventListener('scroll', function() {
-                requestAnimationFrame(function() {
-                    var scrolled = world.scrollTop;
-                    for (var i = 0; i < layers.length; i++) {
-                        var layer = layers[i];
-                        var speed = layer.getAttribute('data-speed');
-                        var isCenterX = layer.classList.contains('center-x');
-                        var isCenterY = layer.classList.contains('center-y');
-                        var xBase = isCenterX ? '-50%' : '0px';
-                        var yBase = isCenterY ? '-50%' : '0px';
-                        layer.style.transform = 'translate(' + xBase + ', calc(' + yBase + ' + ' + (scrolled * speed) + 'px))';
-                    }
-                });
-            });
-        }
-
-        function initScrollObserver() {
-            if (!window.IntersectionObserver) return;
-            var cards = document.querySelectorAll('.scroll-item');
-            var observer = new IntersectionObserver(function(entries) {
-                for (var i = 0; i < entries.length; i++) {
-                    if (entries[i].isIntersecting) entries[i].target.classList.add('visible');
-                }
-            }, { threshold: 0.1 }); 
-            for (var j = 0; j < cards.length; j++) observer.observe(cards[j]);
-        }
-
-        var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
-        function spawnSparkle(e) {
-            if (currentWorld !== 'world-girl') return;
-            
-            var overlay = document.getElementById('girl-bye-overlay');
-            if (overlay && overlay.style.opacity === '1') return;
-            
-            var x = e.touches ? e.touches[0].clientX : e.clientX;
-            var y = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            var girlWorld = document.getElementById('world-girl');
-            if (!girlWorld) return;
-            var scrollY = girlWorld.scrollTop;
-
-            var ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.left = x + 'px';
-            ripple.style.top = (y + scrollY) + 'px';
-            girlWorld.appendChild(ripple);
-
-            var sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            sparkle.style.left = (x - 12) + 'px';
-            sparkle.style.top = (y + scrollY - 12) + 'px';
-            girlWorld.appendChild(sparkle);
-
-            setTimeout(function() { 
-                if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
-                if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple); 
-            }, 600);
-        }
-
-        function initBoyFeatures() {
-            var boyWorld = document.getElementById('world-boy');
-            var canvas = document.getElementById('spidey-canvas');
-            if (!canvas || !boyWorld) return;
-            var ctx = canvas.getContext('2d');
-            if (!ctx) return;
-            
-            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            var particles = [];
-            var mouse = { x: -1000, y: -1000 };
-
-            boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
-            boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
-
-            for(var i=0; i<150; i++) {
-                particles.push({ 
-                    x: Math.random() * canvas.width, 
-                    y: Math.random() * canvas.height, 
-                    vx: (Math.random() - 0.5)*1.5, 
-                    vy: (Math.random() - 0.5)*1.5 
-                });
-            }
-
-            function animateWeb() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for(var i=0; i<particles.length; i++) {
-                    var p = particles[i];
-                    p.x += p.vx; p.y += p.vy;
-                    
-                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                    
-                    ctx.beginPath(); 
-                    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); 
-                    ctx.fillStyle = '#ff0000'; 
-                    ctx.fill();
-
-                    var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
-                    if(dist < 180) {
-                        ctx.beginPath(); 
-                        ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - dist/180) + ')'; 
-                        ctx.lineWidth = 1.2;
-                        ctx.moveTo(p.x, p.y); 
-                        ctx.lineTo(mouse.x, mouse.y); 
-                        ctx.stroke();
-                    }
-                }
-                requestAnimationFrame(animateWeb);
-            }
-            animateWeb();
-        }
-
-        window.onload = function() {
-            window.addEventListener('touchstart', spawnSparkle, {passive: true});
-            window.addEventListener('click', spawnSparkle);
-            setupParallax('world-girl');
-            setupParallax('world-boy');
-        };
-    </script>
-</body>
-</html>
-    
+        .tap-badge-boy { 
+            float: right; 
+            font-size: 0.7rem; 
+            font-family: 'Montserrat', sans-serif; 
+            background: rgba(255,0,0,0.2); 
+            border: 1px solid rgba(255,0
