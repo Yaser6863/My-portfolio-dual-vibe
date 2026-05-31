@@ -1,3 +1,29 @@
+    /* GIRL WORLD */
+    #world-girl { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #fff; cursor: crosshair; }  
+    #world-girl .scroll-down-icon { color: #ff1493; text-shadow: 0 2px 5px rgba(255,20,147,0.5); }  
+    #world-girl .para-bold { -webkit-text-stroke: 2px rgba(255, 20, 147, 0.15); font-family: 'Nunito', sans-serif; }  
+    #world-girl .para-quote { color: #ff1493; text-shadow: none; font-weight: 900; }  
+    .name-highlight { color: #ff1493; text-shadow: 0 0 8px rgba(255,20,147,0.5); font-style: italic; font-weight: 900; letter-spacing: 1px; }  
+    .cute-gif { width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin: 0 auto 15px auto; display: block; box-shadow: 0 10px 20px rgba(255,20,147,0.2); animation: floatGif 3s infinite ease-in-out; }  
+    @keyframes floatGif { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }  
+    .g-card { background: rgba(255, 255, 255, 0.25); border-radius: 25px; padding: 35px 25px; width: 100%; max-width: 450px; z-index: 10; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); color: #333; opacity: 0; transform: scale(0.9) translateY(50px); transition: opacity 0.8s, transform 0.8s; display: flex; flex-direction: column; text-align: center; gap: 15px; text-decoration: none; position: relative; }  
+    .g-card.visible { opacity: 1; transform: scale(1) translateY(0); }  
+    .g-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; color: #ff1493; }  
+    .g-title i { font-size: 1.8rem; display: block; margin-bottom: 10px; color: #ff69b4; }  
+    .g-flirt { font-size: 1.1rem; font-weight: 700; line-height: 1.6; color: #444; }  
+    .main-flirt { background: rgba(255, 255, 255, 0.3); padding: 30px; border-radius: 20px; text-align: center; font-size: 1.3rem; font-weight: 900; box-shadow: 0 15px 35px rgba(0,0,0,0.1); color: #333; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.6); z-index: 10; line-height: 1.6; width: 90%; max-width: 450px; }  
+    
+    /* SPARKLES */
+    .sparkle { position: absolute; pointer-events: none !important; z-index: 999999; font-size: 24px; animation: pop 1s ease-out forwards; text-shadow: 0 0 10px rgba(255,255,255,0.8); }  
+    @keyframes pop { 0% { transform: scale(0) rotate(0deg); opacity: 1; } 100% { transform: scale(1.2) rotate(45deg) translateY(-40px); opacity: 0; } }  
+    .ripple { position: absolute; border-radius: 50%; border: 2px solid rgba(255, 20, 147, 0.6); pointer-events: none !important; width: 20px; height: 20px; transform: translate(-50%, -50%) scale(1); z-index: 999998; animation: rippleAnim 0.6s ease-out forwards; }  
+    @keyframes rippleAnim { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(10); opacity: 0; } }  
+
+    /* BOY WORLD */  
+    #world-boy { background: #050505; font-family: 'Montserrat', sans-serif; position: relative; }  
+    #spidey-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; z-index: 1; pointer-events: none; transition: opacity 1s; }  
+    .glitch-text { animation: glitch 3s infinite; }  
+    @keyframes glitch { 0%, 100% { text-shadow: 2px 2px 0px rgba(255,0,0,0.5), -2px -2px 0px rgba(0,0,255,0.5); } 50% { text-shadow: -2px 2px 0px rgba(255,0,0,0.5), 2px -2px 0px rgba(0,0,255,0.5); } }  
     /* MODALS */
     #name-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; background: rgba(0,0,0,0.8); z-index: 100000; justify-content: center; align-items: center; backdrop-filter: blur(10px); flex-direction: column; opacity: 0; transition: opacity 0.5s; }  
     .modal-box { background: rgba(255, 105, 180, 0.2); padding: 30px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 10px 40px rgba(255,20,147,0.5); width: 90%; max-width: 350px; transform: translateY(50px); transition: transform 0.5s; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(20px); }  
