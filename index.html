@@ -80,19 +80,19 @@
     .yaser-name { font-size: clamp(4rem, 15vw, 8rem); font-weight: 900; color: #ff0000; letter-spacing: 10px; margin-bottom: 10px; text-transform: uppercase; text-shadow: 2px 2px 0px #880000, 4px 4px 0px #660000, 6px 6px 0px #440000, 8px 8px 0px #220000, 10px 10px 30px rgba(255,0,0,0.8); position: relative; z-index: 5; animation: textReveal 1.5s ease-out forwards;}  
     .yaser-bio { font-size: clamp(0.7rem, 2.5vw, 1.2rem); font-weight: 700; color: #fff; letter-spacing: 2px; text-transform: uppercase; z-index: 10; border-top: 1px solid #550000; border-bottom: 1px solid #550000; padding: 10px 0; text-align: center; position: relative; z-index: 5; animation: textReveal 2s ease-out forwards;}  
     
-    .b-card { margin-top: 25vh; background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,0.98)); border: 1px solid rgba(255,0,0,0.15); border-left: 5px solid #ff0000; width: 100%; max-width: 450px; padding: 30px; border-radius: 15px; color: #fff; z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,0,0,0.05); backdrop-filter: blur(10px); cursor: pointer; opacity: 0; transform: scale(0.85) translateY(80px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: block; position: relative; overflow: hidden; }  
+    .b-card { margin-top: 25vh; background: linear-gradient(145deg, rgba(20,20,20,0.9), rgba(5,5,5,0.98)); border: 1px solid rgba(255,0,0,0.15); border-left: 5px solid #ff0000; width: 100%; max-width: 450px; padding: 30px; border-radius: 15px; color: #fff; z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,0,0,0.05); backdrop-filter: blur(10px); cursor: pointer; opacity: 0; transform: scale(0.85) translateY(80px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: block; position: relative; overflow: hidden; transform-style: preserve-3d; }  
     .b-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,0,0,0.15), transparent); transform: skewX(-20deg); transition: 0.6s ease; z-index: 1; pointer-events: none; }
     .b-card:hover::after { left: 150%; transition: 0.6s ease-in-out; }
     .b-card.visible { opacity: 1; transform: scale(1) translateY(0); }  
     .b-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 25px 60px rgba(255,0,0,0.4), inset 0 0 25px rgba(255,0,0,0.15); border-color: #ff0000; }
     .b-card.glow-red { border-color: #ff0000 !important; box-shadow: 0 0 50px rgba(255, 0, 0, 0.9), inset 0 0 30px rgba(255, 0, 0, 0.5) !important; background: rgba(40, 0, 0, 0.9) !important; transform: scale(0.95) !important; }  
     
-    /* Font Crisping: NO translateZ here to keep it perfectly sharp */
+    /* Font Crisping: Clean classes */
     .b-num { font-size: 5rem; color: #ff0000; font-weight: 900; line-height: 1; opacity: 0.9; text-shadow: 4px 4px 0px #330000; margin-bottom: 10px; display: block; font-family: 'Montserrat', sans-serif; position: relative; z-index: 5;}  
     .b-title { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; position: relative; z-index: 5;}  
     .tap-badge-boy { float: right; font-size: 0.7rem; font-family: 'Montserrat', sans-serif; background: rgba(255,0,0,0.15); border: 1px solid rgba(255,0,0,0.4); padding: 4px 10px; border-radius: 5px; font-weight: 900; letter-spacing: 2px; color: #ff0000; margin-top: -30px; pointer-events: none; transition: 0.3s; position: relative; z-index: 5;}  
 
-    /* NEW: PERFECT IMAGE FIT CLASS (NO HEAD CUTTING) */
+    /* NEW: PERFECT IMAGE FIT CLASS */
     .card-bg-png {
         position: absolute;
         bottom: 0; right: 20px;
@@ -149,13 +149,15 @@
     .message-body { font-size: 0.85rem; color: rgba(255, 255, 255, 0.85); font-weight: 400; }
     .notch-line { width: 36px; height: 4px; background: rgba(255, 255, 255, 0.12); border-radius: 2px; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); }
     
-    .tilt-target { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 450px; margin: 0 auto; }
+    .tilt-target { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 450px; margin: 0 auto; transform-style: preserve-3d; perspective: 1200px;}
 </style>  
 </head>  
 <body>  
 <audio id="bg-music" src="sanam.mp3" preload="auto"></audio>  
 <audio id="meme-audio" src="fahhh.mp3" preload="auto"></audio>  
-<audio id="click-audio" src="click.mp3" preload="auto"></audio>  
+<audio id="click-audio" src="click.mp3" preload="auto"></audio> 
+<audio id="spidey-audio" src="Spidey-entry.mp3" preload="auto"></audio>
+
 <div id="smart-toast">Message Here</div>  
 
 <div id="phone-notification" onclick="openInstagramDM()">
@@ -276,7 +278,7 @@
 
     <div class="section boy-content" style="justify-content: center;">  
         <div class="tilt-target">
-            <img src="1000058390.png" style="height: 180px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(255,0,0,0.5)); margin-bottom: 20px;" alt="Mask">
+            <img src="hero-spidey.png" style="height: 180px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(255,0,0,0.5)); margin-bottom: 20px;" alt="Mask">
             <div class="yaser-name">YASER</div>  
             <div class="yaser-bio">Science 🧬  |  Code 💻  |  Web 🌐  |  Tech ⚙️</div>  
         </div>
@@ -289,10 +291,10 @@
         
         <div class="tilt-target">
             <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/sk_yaser_urs?igsh=MXE5a2E4ZzR1aTFjYg==', 'Main Profile (Insta)')">  
-                <img src="1000058389.png" class="card-bg-png" alt="Spidey1">
-                <span class="tap-badge-boy">TAP [↗]</span>  
-                <span class="b-num">01</span>  
-                <span class="b-title"><i class="fab fa-instagram"></i> Main Profile</span>  
+                <img src="spidey-swing.png" class="card-bg-png" style="transform: translateZ(10px);" alt="Spidey1">
+                <span class="tap-badge-boy" style="transform: translateZ(30px);">TAP [↗]</span>  
+                <span class="b-num" style="transform: translateZ(40px);">01</span>  
+                <span class="b-title" style="transform: translateZ(20px);"><i class="fab fa-instagram"></i> Main Profile</span>  
             </div>  
         </div>
     </div>  
@@ -303,10 +305,10 @@
         
         <div class="tilt-target">
             <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.instagram.com/yaser_official_for_you?igsh=ZXNzZ3dnYXZ5YnBo', 'Shadow Identity (Insta)')">  
-                <img src="1000058391.png" class="card-bg-png" alt="Spidey2">
-                <span class="tap-badge-boy">TAP [↗]</span>  
-                <span class="b-num">02</span>  
-                <span class="b-title"><i class="fab fa-instagram"></i> Shadow Identity</span>  
+                <img src="spidey-advanced.png" class="card-bg-png" style="transform: translateZ(10px);" alt="Spidey2">
+                <span class="tap-badge-boy" style="transform: translateZ(30px);">TAP [↗]</span>  
+                <span class="b-num" style="transform: translateZ(40px);">02</span>  
+                <span class="b-title" style="transform: translateZ(20px);"><i class="fab fa-instagram"></i> Shadow Identity</span>  
             </div>  
         </div>
     </div>  
@@ -316,10 +318,10 @@
         
         <div class="tilt-target">
             <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://www.snapchat.com/add/arfat249799?share_id=NesmCnRomaE&locale=en-GB', 'Snapchat Base')">  
-                <img src="1000058392.png" class="card-bg-png" style="height: 100%; right: 0;" alt="DP1">
-                <span class="tap-badge-boy">TAP [↗]</span>  
-                <span class="b-num">03</span>  
-                <span class="b-title"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>  
+                <img src="deadpool-flowers.png" class="card-bg-png" style="height: 100%; right: 0; transform: translateZ(10px);" alt="DP1">
+                <span class="tap-badge-boy" style="transform: translateZ(30px);">TAP [↗]</span>  
+                <span class="b-num" style="transform: translateZ(40px);">03</span>  
+                <span class="b-title" style="transform: translateZ(20px);"><i class="fab fa-snapchat-ghost"></i> Snapchat Base</span>  
             </div>  
         </div>
     </div>  
@@ -330,10 +332,10 @@
         
         <div class="tilt-target">
             <div class="b-card scroll-item" onclick="boyCardClick(this, 'https://api.whatsapp.com/send?phone=919356047251', 'WhatsApp Comms')">  
-                <img src="1000058393.png" class="card-bg-png" alt="DP2">
-                <span class="tap-badge-boy">TAP [↗]</span>  
-                <span class="b-num">04</span>  
-                <span class="b-title"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>  
+                <img src="deadpool-arms.png" class="card-bg-png" style="transform: translateZ(10px);" alt="DP2">
+                <span class="tap-badge-boy" style="transform: translateZ(30px);">TAP [↗]</span>  
+                <span class="b-num" style="transform: translateZ(40px);">04</span>  
+                <span class="b-title" style="transform: translateZ(20px);"><i class="fab fa-whatsapp"></i> WhatsApp Comms</span>  
             </div>  
         </div>
     </div>  
@@ -483,7 +485,14 @@
         if (isWorldActive) return;  
         triggerStage1("Shadow User", "🕷️ Boy World"); triggerWorld('world-boy');  
         
-        // ✨ MAGIC FIX: 3D sensors get activated automatically here without a button!
+        // 🎵 NEW: SPIDEY AUDIO TRIGGER
+        var spideyAudio = document.getElementById('spidey-audio');
+        if (spideyAudio) {
+            spideyAudio.volume = 1.0;
+            spideyAudio.play().catch(function(e){ console.log("Audio play blocked"); });
+        }
+
+        // 🚀 GYRO AUTO-START
         if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
             DeviceOrientationEvent.requestPermission().then(state => {
                 if(state === 'granted') startGyroTracking();
@@ -733,7 +742,7 @@
         currentX = lerpTilt(currentX, targetX, 0.08);
         currentY = lerpTilt(currentY, targetY, 0.08);
 
-        // Apply tilt without breaking text crispness
+        // Apply tilt to target wrappers
         document.querySelectorAll('.tilt-target').forEach(target => {
             target.style.transform = `perspective(1200px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
         });
